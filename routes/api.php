@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IdentificationCardTypeController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserTypesController;
@@ -58,7 +59,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
     Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
 
-    Route::get('rentals', [RentalController::class, "index"]);
+    Route::get('rentals', [RentalController::class, "index"])->middleware('admin');
+    Route::get('users', [UserController::class, "index"])->middleware('admin');
+
+    //TODO: Verify sender
     Route::get('rentals/{id}', [RentalController::class, "show"]);
     Route::post('rentals', [RentalController::class, "store"]);
     Route::put('rentals/{id}', [RentalController::class, "update"]);
