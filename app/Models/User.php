@@ -48,6 +48,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_verified' => 'boolean'
     ];
 
     public function user_type()
@@ -58,5 +59,10 @@ class User extends Authenticatable
     public function rentals()
     {
         return $this->hasMany(Rental::class);
+    }
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class, 'landlord_id');
     }
 }
