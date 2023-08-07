@@ -13,7 +13,12 @@ class AmenityController extends Controller
      */
     public function index()
     {
-        //
+        $res = Amenity::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -35,9 +40,14 @@ class AmenityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Amenity $amenity)
+    public function show($id)
     {
-        //
+        $res = Amenity::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**

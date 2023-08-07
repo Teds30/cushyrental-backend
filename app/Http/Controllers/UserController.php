@@ -32,9 +32,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $res = User::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -51,5 +56,17 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function user_units($id)
+    {
+        $res = User::find($id);
+        $out = array();
+
+
+        if ($res) {
+            $out = $res->units()->where('status', '1')->get();
+        }
+        return $out;
     }
 }
