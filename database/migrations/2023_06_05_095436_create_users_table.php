@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->string('gender');
+            $table->tinyInteger('gender');
             $table->string('phone_number');
             $table->foreignId('user_type_id')
                 ->constrained();
-            $table->string('is_verified')->default(0);
+            $table->tinyInteger('is_verified')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
