@@ -8,6 +8,7 @@ use App\Http\Controllers\IdentificationCardTypeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReportedUserController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UnitController;
@@ -97,5 +98,11 @@ Route::get('rules/{id}', [RuleController::class, "show"]);
 
 Route::get('subscriptions', [SubscriptionController::class, "index"]);
 Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
+
+
+// Route::get('user_reports', [ReportedUserController::class, "index"]);
+Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
+Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_group_show"]);
+
 
 Route::post('image-upload', [ImageController::class, "store"]);
