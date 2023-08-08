@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ReportedUser;
 use App\Http\Requests\StoreReportedUserRequest;
 use App\Http\Requests\UpdateReportedUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ReportedUserController extends Controller
 {
@@ -13,7 +15,19 @@ class ReportedUserController extends Controller
      */
     public function index()
     {
-        //
+        $out = array();
+        $res = ReportedUser::get()->where('status', 1);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        foreach ($res as $entry) {
+            $user = $entry->user;
+            $reported_by = $entry->report_by;
+            $out[] = $entry;
+        }
+        return $out;
     }
 
     /**
@@ -35,9 +49,14 @@ class ReportedUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ReportedUser $reportedUser)
+    public function show($id)
     {
-        //
+        $res = ReportedUser::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -62,5 +81,47 @@ class ReportedUserController extends Controller
     public function destroy(ReportedUser $reportedUser)
     {
         //
+    }
+
+    public function reported_user_group()
+    {
+        $out = array();
+        // $res = ReportedUser::get()->where('status', 1)->distinct('user_id');
+        $res = ReportedUser::select('user_id')->distinct()->get();
+
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        foreach ($res as $entry) {
+            $reports = array();
+            $user_reports = ReportedUser::get()->where('user_id', $entry->user_id);
+            foreach ($user_reports as $ur) {
+                $reports[] = $ur;
+            }
+            $out[] = ["user" => $entry->user, "reports" => [...$reports]];
+        }
+        return $out;
+    }
+
+    public function reported_user_group_show($user_id)
+    {
+        // $out = array();
+
+        $res = User::get()->where('id', $user_id)->where('status', 1)->firstOrFail();
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        $res->reported;
+        $out = $res;
+
+        foreach ($out->reported as $reporter) {
+            $reporter->report_by;
+        }
+
+        // return $test;
+
+        return $out;
     }
 }

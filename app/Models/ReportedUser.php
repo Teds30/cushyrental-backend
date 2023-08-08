@@ -15,12 +15,12 @@ class ReportedUser extends Model
         'reason',
         'status',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function reported_by()
+    public function report_by()
     {
         return $this->belongsTo(User::class, 'reported_by');
     }
