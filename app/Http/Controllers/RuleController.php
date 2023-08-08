@@ -13,7 +13,12 @@ class RuleController extends Controller
      */
     public function index()
     {
-        //
+        $res = Rule::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -35,9 +40,14 @@ class RuleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rule $rule)
+    public function show($id)
     {
-        //
+        $res = Rule::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**

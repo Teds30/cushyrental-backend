@@ -13,7 +13,12 @@ class FacilityController extends Controller
      */
     public function index()
     {
-        //
+        $res = Facility::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -35,9 +40,14 @@ class FacilityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Facility $facility)
+    public function show($id)
     {
-        //
+        $res = Facility::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**

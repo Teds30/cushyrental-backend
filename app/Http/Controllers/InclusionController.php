@@ -13,7 +13,12 @@ class InclusionController extends Controller
      */
     public function index()
     {
-        //
+        $res = Inclusion::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -35,9 +40,14 @@ class InclusionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Inclusion $inclusion)
+    public function show($id)
     {
-        //
+        $res = Inclusion::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
