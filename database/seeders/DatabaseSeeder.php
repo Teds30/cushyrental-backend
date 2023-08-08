@@ -47,9 +47,9 @@ class DatabaseSeeder extends Seeder
 
         )->create();
 
-        User::factory()->create();
+        User::factory()->count(10)->create();
         BlacklistedUser::factory()->create();
-        ReportedUser::factory()->create();
+        ReportedUser::factory()->count(10)->create();
         IdentificationCardType::factory()->count(2)->sequence(
             ['name' => 'National ID'],
             ['name' => "Driver's License"],
