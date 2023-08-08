@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subscription;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdateSubscriptionRequest;
+use App\Models\Amenity;
 
 class SubscriptionController extends Controller
 {
@@ -13,7 +14,12 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        //
+        $res = Subscription::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
@@ -35,9 +41,14 @@ class SubscriptionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Subscription $subscription)
+    public function show($id)
     {
-        //
+        $res = Subscription::get()->where('id', $id)->where('status', 1)->firstOrFail();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
     }
 
     /**
