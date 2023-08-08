@@ -25,6 +25,7 @@ class User extends Authenticatable
         'last_name',
         'gender',
         'phone_number',
+        'profile_picture_img',
         'user_type_id',
         'is_verified',
         'status',
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function units()
     {
         return $this->hasMany(Unit::class, 'landlord_id');
+    }
+
+    public function reported()
+    {
+        return $this->hasMany(ReportedUser::class, 'user_id');
     }
 }
