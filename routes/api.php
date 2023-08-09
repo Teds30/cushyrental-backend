@@ -16,6 +16,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserTypesController;
+use App\Models\AccountVerification;
 use App\Models\Facility;
 use App\Models\Rule;
 
@@ -104,5 +105,8 @@ Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
 Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
 Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_group_show"]);
 
+
+Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
+Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "show"]);
 
 Route::post('image-upload', [ImageController::class, "store"]);

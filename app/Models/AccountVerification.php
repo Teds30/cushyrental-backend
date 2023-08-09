@@ -11,11 +11,11 @@ class AccountVerification extends Model
 
     protected $fillable = [
         'user_id',
-        'checked_by',
+        'checked_by_id',
         'verdict',
         'denied_reason',
         'submitted_id_image_url',
-        'identification_card_type',
+        'identification_card_type_id',
         'address',
         'contact_number',
         'status',
@@ -27,10 +27,10 @@ class AccountVerification extends Model
     }
     public function checked_by()
     {
-        return $this->belongsTo(User::class, 'checked_by');
+        return $this->belongsTo(User::class, 'checked_by_id');
     }
     public function identification_card_type()
     {
-        return $this->belongsTo(User::class, 'identification_card_type');
+        return $this->belongsTo(IdentificationCardType::class, 'identification_card_type_id');
     }
 }

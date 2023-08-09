@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('account_verifications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('checked_by');
-            $table->unsignedBigInteger('identification_card_type');
+            $table->unsignedBigInteger('checked_by_id');
+            $table->unsignedBigInteger('identification_card_type_id');
             $table->tinyInteger('verdict')->nullable();
             $table->string('denied_reason')->nullable();
             $table->string('submitted_id_image_url');
@@ -29,11 +29,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->foreign('checked_by')
+            $table->foreign('checked_by_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->foreign('identification_card_type')
+            $table->foreign('identification_card_type_id')
                 ->references('id')
                 ->on('identification_card_types')
                 ->onDelete('cascade');

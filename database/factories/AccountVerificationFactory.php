@@ -20,8 +20,8 @@ class AccountVerificationFactory extends Factory
     {
         return [
             'user_id' => User::pluck('id')->random(),
-            'checked_by' => User::pluck('id')->random(),
-            'identification_card_type' => IdentificationCardType::pluck('id')->random(),
+            'checked_by_id' => User::pluck('id')->random(),
+            'identification_card_type_id' => IdentificationCardType::pluck('id')->random(),
             'verdict' => fake()->numberBetween(0, 2),
             'submitted_id_image_url' => 'submitted_id/1.png',
             'address' => 'Legazpi City, Albay',

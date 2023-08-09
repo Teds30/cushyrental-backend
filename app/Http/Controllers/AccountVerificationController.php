@@ -14,7 +14,13 @@ class AccountVerificationController extends Controller
      */
     public function index()
     {
-        return AccountVerification::all();
+        $res = AccountVerification::get()->where('status', 1);
+
+        if (!$res) {
+            return response()->json([], 404);
+        }
+
+        return $res;
     }
 
     /**
@@ -58,11 +64,14 @@ class AccountVerificationController extends Controller
     public function show($id)
     {
 
-        $res = AccountVerification::get()->where('id', $id)->where('status', 1);
+        $res = AccountVerification::get()->where('id', $id)->where('status', 1)->firstOrFail();;
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
+        $res->user;
+        $res->checked_by;
+        $res->identification_card_type;
         return $res;
     }
 
