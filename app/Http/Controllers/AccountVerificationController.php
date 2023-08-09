@@ -20,6 +20,11 @@ class AccountVerificationController extends Controller
             return response()->json([], 404);
         }
 
+        foreach ($res as $e) {
+            $e->user;
+            $e->checked_by;
+            $e->identification_card_type;
+        }
         return $res;
     }
 
@@ -63,7 +68,6 @@ class AccountVerificationController extends Controller
      */
     public function show($id)
     {
-
         $res = AccountVerification::get()->where('id', $id)->where('status', 1)->firstOrFail();;
 
         if (!$res || !$res->count()) {
@@ -121,6 +125,19 @@ class AccountVerificationController extends Controller
 
         $res->update(['status' => 0]);
 
+        return $res;
+    }
+
+    public function landlord_verification($id)
+    {
+        $res = AccountVerification::get()->where('user_id', $id)->where('status', 1)->firstOrFail();;
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        $res->user;
+        $res->checked_by;
+        $res->identification_card_type;
         return $res;
     }
 }

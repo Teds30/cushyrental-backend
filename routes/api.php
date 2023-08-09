@@ -107,6 +107,6 @@ Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_g
 
 
 Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
-Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "show"]);
+Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
 
 Route::post('image-upload', [ImageController::class, "store"]);
