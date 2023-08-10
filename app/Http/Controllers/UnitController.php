@@ -65,11 +65,32 @@ class UnitController extends Controller
      */
     public function show($id)
     {
-        $res = Unit::get()->where('id', $id)->where('status', 1);
+        $res = Unit::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
+
+        $res->landlord;
+
+        $out = array();
+
+        $amenities = $this->unit_amenities($id);
+        $facilities = $this->unit_facilities($id);
+        $inclusions = $this->unit_inclusions($id);
+        $rules = $this->unit_rules($id);
+        $images = $this->unit_images($id);
+        $subscriptions = $this->unit_subscriptions($id);
+        $rentals = $this->unit_rentals($id);
+
+        $res['amenities'] = $amenities;
+        $res['facilities'] = $facilities;
+        $res['inclusions'] = $inclusions;
+        $res['rules'] = $rules;
+        $res['images'] = $images;
+        $res['subscriptions'] = $subscriptions;
+        $res['rentals'] = $rentals;
+
         return $res;
     }
 
@@ -86,7 +107,7 @@ class UnitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $res = Unit::find($id);
 
         if (!$res || !$res->count()) {
