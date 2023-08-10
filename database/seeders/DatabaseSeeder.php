@@ -77,9 +77,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'No Smoking', 'icon' => 'no_smoking.svg'],
         )->create();
         Subscription::factory()->count(3)->sequence(
-            ['name' => 'Bronze', 'price' => 0, 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
-            ['name' => 'Silver', 'price' => 0, 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
-            ['name' => 'Gold', 'price' => 0, 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
+            ['name' => 'Bronze', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
+            ['name' => 'Silver', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
+            ['name' => 'Gold', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
         )->create();
 
 

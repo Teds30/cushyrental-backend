@@ -11,6 +11,7 @@ class Subscription extends Model
 
     protected $fillable = [
         'name',
+        'details',
         'price',
         'hex_color',
         'features',
