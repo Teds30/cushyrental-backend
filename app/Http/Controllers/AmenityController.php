@@ -42,7 +42,7 @@ class AmenityController extends Controller
      */
     public function show($id)
     {
-        $res = Amenity::get()->where('id', $id)->where('status', 1)->firstOrFail();
+        $res = Amenity::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);

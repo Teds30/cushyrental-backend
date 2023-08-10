@@ -68,7 +68,7 @@ class AccountVerificationController extends Controller
      */
     public function show($id)
     {
-        $res = AccountVerification::get()->where('id', $id)->where('status', 1)->firstOrFail();;
+        $res = AccountVerification::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
@@ -130,10 +130,10 @@ class AccountVerificationController extends Controller
 
     public function landlord_verification($id)
     {
-        $res = AccountVerification::get()->where('user_id', $id)->where('status', 1)->firstOrFail();;
+        $res = AccountVerification::get()->where('user_id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
-            return response()->json([], 404);
+            return response()->json(["message" => "No record found."], 404);
         }
         $res->user;
         $res->checked_by;
