@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Amenity;
 use App\Http\Requests\StoreAmenityRequest;
 use App\Http\Requests\UpdateAmenityRequest;
+use Illuminate\Http\Request;
 
 class AmenityController extends Controller
 {
@@ -32,7 +33,7 @@ class AmenityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAmenityRequest $request)
+    public function store(Request $request)
     {
         $fields = $request->validate([
             'icon' => 'string',
@@ -43,7 +44,7 @@ class AmenityController extends Controller
         $unit = Amenity::create($fields);
 
 
-        return response($unit, 201);
+        return response()->json($unit, 201);
     }
 
     /**
