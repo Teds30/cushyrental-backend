@@ -91,12 +91,15 @@ Route::post('amenities', [AmenityController::class, "store"]);
 
 Route::get('facilities', [FacilityController::class, "index"]);
 Route::get('facilities/{id}', [FacilityController::class, "show"]);
+Route::post('facilities', [FacilityController::class, "store"]);
 
 Route::get('inclusions', [InclusionController::class, "index"]);
 Route::get('inclusions/{id}', [InclusionController::class, "show"]);
+Route::post('inclusions', [InclusionController::class, "store"]);
 
 Route::get('rules', [RuleController::class, "index"]);
 Route::get('rules/{id}', [RuleController::class, "show"]);
+Route::post('rules', [RuleController::class, "store"]);
 
 Route::get('subscriptions', [SubscriptionController::class, "index"]);
 Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
@@ -111,3 +114,6 @@ Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_g
 Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
 Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
 
+Route::post('image-upload', [ImageController::class, "store"]);
+Route::get('images', [ImageController::class, "index"]);
+Route::get('images/{fileName}', [ImageController::class, "show"]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Facility;
 use App\Http\Requests\StoreFacilityRequest;
 use App\Http\Requests\UpdateFacilityRequest;
+use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
@@ -32,9 +33,17 @@ class FacilityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFacilityRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'icon' => 'string',
+            'name' => 'required|string',
+        ]);
+
+        $unit = Facility::create($fields);
+
+
+        return $unit;
     }
 
     /**

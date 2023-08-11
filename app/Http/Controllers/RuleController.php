@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rule;
 use App\Http\Requests\StoreRuleRequest;
 use App\Http\Requests\UpdateRuleRequest;
+use Illuminate\Http\Request;
 
 class RuleController extends Controller
 {
@@ -32,9 +33,17 @@ class RuleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRuleRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'icon' => 'string',
+            'name' => 'required|string',
+        ]);
+
+        $unit = Rule::create($fields);
+
+
+        return $unit;
     }
 
     /**

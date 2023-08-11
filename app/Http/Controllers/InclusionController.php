@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inclusion;
 use App\Http\Requests\StoreInclusionRequest;
 use App\Http\Requests\UpdateInclusionRequest;
+use Illuminate\Http\Request;
 
 class InclusionController extends Controller
 {
@@ -32,9 +33,17 @@ class InclusionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreInclusionRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'icon' => 'string',
+            'name' => 'required|string',
+        ]);
+
+        $unit = Inclusion::create($fields);
+
+
+        return $unit;
     }
 
     /**
