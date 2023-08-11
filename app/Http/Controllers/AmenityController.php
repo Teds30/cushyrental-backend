@@ -38,13 +38,12 @@ class AmenityController extends Controller
         $fields = $request->validate([
             'icon' => 'string',
             'name' => 'required|string',
-            'is_available' => 'required|string',
         ]);
 
         $unit = Amenity::create($fields);
 
 
-        return response()->json($unit, 201);
+        return $unit;
     }
 
     /**
