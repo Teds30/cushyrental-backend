@@ -6,6 +6,7 @@ use App\Models\Subscription;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdateSubscriptionRequest;
 use App\Models\Amenity;
+use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
@@ -62,9 +63,17 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubscriptionRequest $request, Subscription $subscription)
+    public function update($id, Request $request)
     {
-        //
+        $res = Subscription::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->update($request->all());
+
+        return $res;
     }
 
     /**
