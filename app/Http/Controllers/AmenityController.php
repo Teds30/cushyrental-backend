@@ -34,7 +34,16 @@ class AmenityController extends Controller
      */
     public function store(StoreAmenityRequest $request)
     {
-        //
+        $fields = $request->validate([
+            'icon' => 'string',
+            'name' => 'required|string',
+            'is_available' => 'required|string',
+        ]);
+
+        $unit = Amenity::create($fields);
+
+
+        return response($unit, 201);
     }
 
     /**
