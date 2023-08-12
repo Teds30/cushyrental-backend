@@ -70,16 +70,32 @@ class RuleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRuleRequest $request, Rule $rule)
+    public function update(Request $request, $id)
     {
-        //
+        $res = Rule::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->update($request->all());
+
+        return $res;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Rule $rule)
+    public function destroy($id)
     {
-        //
+        $res = Rule::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

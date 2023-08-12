@@ -70,16 +70,32 @@ class InclusionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInclusionRequest $request, Inclusion $inclusion)
+    public function update(Request $request, $id)
     {
-        //
+        $res = Inclusion::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->update($request->all());
+
+        return $res;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inclusion $inclusion)
+    public function destroy($id)
     {
-        //
+        $res = Inclusion::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

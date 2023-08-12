@@ -70,16 +70,32 @@ class AmenityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAmenityRequest $request, Amenity $amenity)
+    public function update(Request $request, $id)
     {
-        //
+        $res = Amenity::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->update($request->all());
+
+        return $res;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Amenity $amenity)
+    public function destroy($id)
     {
-        //
+        $res = Amenity::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }
