@@ -94,14 +94,20 @@ Route::delete('amenities/{id}', [AmenityController::class, "destroy"]);
 Route::get('facilities', [FacilityController::class, "index"]);
 Route::get('facilities/{id}', [FacilityController::class, "show"]);
 Route::post('facilities', [FacilityController::class, "store"]);
+Route::put('facilities/{id}', [FacilityController::class, "update"]);
+Route::delete('facilities/{id}', [FacilityController::class, "destroy"]);
 
 Route::get('inclusions', [InclusionController::class, "index"]);
 Route::get('inclusions/{id}', [InclusionController::class, "show"]);
 Route::post('inclusions', [InclusionController::class, "store"]);
+Route::put('inclusions/{id}', [InclusionController::class, "update"]);
+Route::delete('inclusions/{id}', [InclusionController::class, "destroy"]);
 
 Route::get('rules', [RuleController::class, "index"]);
 Route::get('rules/{id}', [RuleController::class, "show"]);
 Route::post('rules', [RuleController::class, "store"]);
+Route::put('rules/{id}', [RuleController::class, "update"]);
+Route::delete('rules/{id}', [RuleController::class, "destroy"]);
 
 Route::get('subscriptions', [SubscriptionController::class, "index"]);
 Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
