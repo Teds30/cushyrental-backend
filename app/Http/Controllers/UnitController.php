@@ -19,6 +19,25 @@ class UnitController extends Controller
         if (!$res) {
             return response()->json([], 404);
         }
+
+        foreach ($res as $entry) {
+            $entry->landlord;
+
+            $amenities = $this->unit_amenities($entry->id);
+            $facilities = $this->unit_facilities($entry->id);
+            $inclusions = $this->unit_inclusions($entry->id);
+            $rules = $this->unit_rules($entry->id);
+            $images = $this->unit_images($entry->id);
+            $subscriptions = $this->unit_active_subscriptions($entry->id);
+
+            $entry['amenities'] = $amenities;
+            $entry['facilities'] = $facilities;
+            $entry['inclusions'] = $inclusions;
+            $entry['rules'] = $rules;
+            $entry['images'] = $images;
+            $entry['active_subscription'] = $subscriptions;
+        }
+
         return $res;
     }
 
@@ -266,6 +285,32 @@ class UnitController extends Controller
         return $out;
     }
 
+
+    public function unit_active_subscriptions($id)
+    {
+        $res = Unit::find($id);
+        $out = null;
+
+
+        if ($res) {
+            $subscriptions = $res->subscriptions;
+
+            foreach ($subscriptions as $u_subscription) {
+                if ($u_subscription->subscription['status'] == 1 && $u_subscription['request_status'] == 1) {
+                    $out = [
+                        'id' => $u_subscription['subscription_id'],
+                        'name' => $u_subscription->subscription['name'],
+                        'hex_color' => $u_subscription->subscription['hex_color'],
+                        'date_start' => $u_subscription['date_start'],
+                        'date_end' => $u_subscription['date_end'],
+                        'type' => $u_subscription['type'],
+                        'request_status' => $u_subscription['request_status'],
+                    ];
+                }
+            }
+        }
+        return $out;
+    }
 
     public function unit_subscriptions($id)
     {
