@@ -17,7 +17,7 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => 'unit_images/1/1.png',
+            'image' => '1.jpg',
         ];
     }
 }
