@@ -88,6 +88,8 @@ Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);
 Route::post('amenities', [AmenityController::class, "store"]);
+Route::put('amenities/{id}', [AmenityController::class, "update"]);
+Route::delete('amenities/{id}', [AmenityController::class, "destroy"]);
 
 Route::get('facilities', [FacilityController::class, "index"]);
 Route::get('facilities/{id}', [FacilityController::class, "show"]);
@@ -116,4 +118,5 @@ Route::get('landlord_verifications/{id}', [AccountVerificationController::class,
 
 Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
-Route::get('images/{fileName}', [ImageController::class, "show"]);
+Route::get('images/{fileName}', [ImageController::class, "showImage"]);
+Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
