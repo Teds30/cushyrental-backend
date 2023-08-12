@@ -37,6 +37,7 @@ class FacilityController extends Controller
     {
         $fields = $request->validate([
             'icon' => 'string',
+            'is_switch' => 'required|int',
             'name' => 'required|string',
         ]);
 
