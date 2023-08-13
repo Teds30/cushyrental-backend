@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -92,8 +93,11 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Image $image)
+    public function destroy($fileName)
     {
-        //
+        // $res = Storage::delete($fileName);
+        $res = unlink(storage_path('app/uploads/attribute_icons/' . $fileName));
+
+        return response()->json($res);
     }
 }

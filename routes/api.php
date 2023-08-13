@@ -126,3 +126,4 @@ Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
+Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
