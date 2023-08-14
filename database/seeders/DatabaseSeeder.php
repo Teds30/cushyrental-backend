@@ -58,23 +58,22 @@ class DatabaseSeeder extends Seeder
 
 
         Facility::factory()->count(3)->sequence(
-            ['name' => 'Comfort Room', 'icon' => 'toilet.svg', 'is_switch' => 0],
-            ['name' => 'Kitchen Sink', 'icon' => 'kitchen_sink.svg', 'is_switch' =>  0],
-            ['name' => 'Parking', 'icon' => 'parking.svg', 'is_switch' => 1],
+            ['name' => 'Comfort Room', 'icon' => 'facility_1692025831.svg', 'is_switch' => 0],
+            ['name' => 'Kitchen Sink', 'icon' => 'facility_1692026078.svg', 'is_switch' =>  0],
+            ['name' => 'Parking', 'icon' => 'facility_1692026270.svg', 'is_switch' => 1],
         )->create();
 
-        Amenity::factory()->count(3)->sequence(
-            ['name' => 'CCTV', 'icon' => 'cctv.svg'],
-            ['name' => 'Air Condition', 'icon' => 'air_condition.svg'],
-            ['name' => 'TV', 'icon' => 'tv.svg'],
+        Amenity::factory()->count(2)->sequence(
+            ['name' => 'CCTV', 'icon' => 'amenity_1692025416.svg'],
+            ['name' => 'Air Condition', 'icon' => 'amenity_1692025428.svg'],
         )->create();
         Inclusion::factory()->count(2)->sequence(
-            ['name' => 'Water', 'icon' => 'water.svg'],
-            ['name' => 'Electricity', 'icon' => 'electricity.svg'],
+            ['name' => 'Water', 'icon' => 'inclusion_1692026406.svg'],
+            ['name' => 'Electricity', 'icon' => 'inclusion_1692026414.svg'],
         )->create();
         Rule::factory()->count(2)->sequence(
-            ['name' => 'No Visitors', 'icon' => 'no_visitors.svg'],
-            ['name' => 'No Smoking', 'icon' => 'no_smoking.svg'],
+            ['name' => 'No Visitors', 'icon' => 'rule_1692027093.svg'],
+            ['name' => 'No Smoking', 'icon' => 'rule_1692026581.svg'],
         )->create();
         Subscription::factory()->count(3)->sequence(
             ['name' => 'Bronze', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
