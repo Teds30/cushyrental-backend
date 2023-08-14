@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->lastName(),
             'last_name' => fake()->lastName(),
-            'gender' => fake()->numberBetween(0, 3),
+            'gender' => fake()->numberBetween(1, 3),
             'phone_number' => fake()->phoneNumber(),
             'profile_picture_img' => 'images/profile_pictures/default/1.jpg',
             'user_type_id' => UserTypes::pluck('id')->random(),
