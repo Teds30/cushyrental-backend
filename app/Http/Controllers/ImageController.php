@@ -39,7 +39,7 @@ class ImageController extends Controller
         $path = $request->path ?? 'images';
         if ($request->has('image')) {
             $image = $request->file('image');
-            $name = time() . '.' . $image->getClientOriginalExtension();
+            $name = $request->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             // $image->move('images/', $name);
             $filePath = $request->file('image')->storeAs($path, $name, 'uploads');
             // Storage::disk('myDisk')->put('/attribute_icons/' . $name, file_get_contents($image));
