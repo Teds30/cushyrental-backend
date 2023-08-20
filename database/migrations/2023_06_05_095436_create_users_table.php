@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('first_name');
-            $table->string('middle_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->tinyInteger('gender');
-            $table->string('phone_number');
-            $table->string('profile_picture_img');
+            $table->tinyInteger('gender')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('profile_picture_img')->nullable();
             $table->foreignId('user_type_id')
                 ->constrained();
             $table->tinyInteger('is_verified')->default(0);
