@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountVerificationController;
 use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\IdentificationCardTypeController;
@@ -127,3 +128,9 @@ Route::get('images', [ImageController::class, "index"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
+
+// Google Auth
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'registerRedirect']);
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'registerCallback']);
+});
