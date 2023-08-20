@@ -25,34 +25,37 @@ class GoogleAuthController extends Controller
         $SocialUser = Socialite::driver('google')->stateless()->user();
         // dd($SocialUser);
 
-        return response($SocialUser, 201);
+        // return response($SocialUser, 201);
         
-        // $userExisted = User::where('email', $SocialUser->email)->first();
+        $userExisted = User::where('email', $SocialUser->email)->first();
 
-        // if (!$userExisted) {
-        //     $user = User::updateOrCreate([
-        //         'id' => $SocialUser->id,
-        //     ], [
-        //         'first_name' => $SocialUser->name,
-        //         'last_name' => $SocialUser->nickname,
-        //         'email' => $SocialUser->email,
-        //         'profile_picture_img' => $SocialUser->avatar,
-        //         // 'user_type_id' => $user_type_id
-        //     ]);
+        if (!$userExisted) {
+            $user = User::updateOrCreate([
+                'id' => $SocialUser->id,
+            ], [
+                'first_name' => $SocialUser->user['given_name'],
+                'last_name' => $SocialUser->user['family_name'],
+                'email' => $SocialUser->email,
+                'profile_picture_img' => $SocialUser->avatar,
+                'user_type_id' => '1'// temporary
+            ]);
 
-        //     $token = $user->createToken('myapptoken')->plainTextToken;
+            $token = $user->createToken('myapptoken')->plainTextToken;
 
-        //     $response = [
-        //         'user' => $user,
-        //         'token' => $token
-        //     ];
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
 
-        //     return response($response, 201);
+            dd($token);
 
-        // }
+        } else {
+            $response = $userExisted;
 
-        // $response = $userExisted;
+            dd($response);
 
-        // return response($response, 201);
+        }
+
+        
     }
 }
