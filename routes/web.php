@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\FacebookAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Google Auth
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'registerRedirect']);
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'registerCallback']);
+});
+
+// faceboook Auth
+Route::get('/auth/facebook/redirect', [FacebookAuthController::class, 'registerRedirect']);
+Route::get('/auth/facebook/callback', [FacebookAuthController::class, 'registerCallback']);
