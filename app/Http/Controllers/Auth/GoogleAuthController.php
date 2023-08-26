@@ -2,60 +2,52 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Response;
+use Ramsey\Uuid\Guid\Fields;
 
 class GoogleAuthController extends Controller
 {
 
-    const provider = 'google';
-
-    public function registerRedirect()
+    public function register(Request $request)
     {
-        return Socialite::driver('google')->redirect();
-    }
+        // Check if the user with the provided email already exists
+        $userExist = User::where('email', $request['email'])->first();
 
-    public function registerCallback()
-    {
-        $SocialUser = Socialite::driver('google')->stateless()->user();
-        // dd($SocialUser);
-
-        // return response($SocialUser, 201);
-        
-        $userExisted = User::where('email', $SocialUser->email)->first();
-
-        if (!$userExisted) {
-            $user = User::updateOrCreate([
-                'id' => $SocialUser->id,
-            ], [
-                'first_name' => $SocialUser->user['given_name'],
-                'last_name' => $SocialUser->user['family_name'],
-                'email' => $SocialUser->email,
-                'profile_picture_img' => $SocialUser->avatar,
-                'user_type_id' => '1'// temporary
-            ]);
-
-            $token = $user->createToken('myapptoken')->plainTextToken;
-
-            $response = [
-                'user' => $user,
-                'token' => $token
-            ];
-
-            dd($token);
-
-        } else {
-            $response = $userExisted;
-
-            dd($response);
-
+        if ($userExist) {
+            return response([
+                'message' => 'Email already exist.'
+            ], 401);
         }
 
-        
+        $fields = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'user_type_id' => 'required|string',
+            'email' => 'required|string|unique:users,email',
+            'profile_picture_img' => 'required|string',
+        ]);
+
+        // Create a new user
+        $user = User::create([
+            'first_name' => $fields['first_name'],
+            'last_name' => $fields['last_name'],
+            'user_type_id' => $fields['user_type_id'],
+            'email' => $fields['email'],
+            'profile_picture_img' => $fields['profile_picture_img'],
+        ]);
+
+        // Generate a token for the user
+        $token = $user->createToken('myapptoken')->plainTextToken;
+
+        // Prepare a success response
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
     }
 }

@@ -1,25 +1,26 @@
 <?php
 
-use App\Http\Controllers\AccountVerificationController;
-use App\Http\Controllers\AmenityController;
-use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Models\Rule;
+use App\Models\Facility;
+use Illuminate\Http\Request;
+use App\Models\AccountVerification;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FacilityController;
-use App\Http\Controllers\IdentificationCardTypeController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\InclusionController;
-use App\Http\Controllers\RentalController;
-use App\Http\Controllers\ReportedUserController;
 use App\Http\Controllers\RuleController;
-use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\RentalController;
+use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\InclusionController;
 use App\Http\Controllers\UserTypesController;
-use App\Models\AccountVerification;
-use App\Models\Facility;
-use App\Models\Rule;
+use App\Http\Controllers\ReportedUserController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\FacebookAuthController;
+use App\Http\Controllers\AccountVerificationController;
+use App\Http\Controllers\IdentificationCardTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,7 +130,5 @@ Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
 
-// Route::group(['middleware' => ['web']], function () {
-//     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'registerRedirect']);
-//     Route::get('/auth/google/callback', [GoogleAuthController::class, 'registerCallback']);
-// });
+Route::post('/google/auth', [GoogleAuthController::class, 'register']);
+Route::post('/facebook/auth', [FacebookAuthController::class, 'register']);
