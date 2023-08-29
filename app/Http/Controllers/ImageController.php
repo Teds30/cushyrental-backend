@@ -64,6 +64,16 @@ class ImageController extends Controller
         }
     }
 
+    public function showChatImage($room_id, $fileName)
+    {
+        $pathToFile = storage_path("app/uploads/chats/" . $room_id . "/" . $fileName);
+        try {
+            return response()->file($pathToFile);
+        } catch (ExceptionFileNotFoundException $exception) {
+            return response()->json("File not found.", 404);
+        }
+    }
+
     public function showIcon($fileName)
     {
         $pathToFile = storage_path("app/uploads/attribute_icons/" . $fileName);
