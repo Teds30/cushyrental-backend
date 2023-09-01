@@ -37,23 +37,22 @@ class RentalController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'user_id' => 'required',
-            'unit_id' => 'required',
-            'monthly_amount' => 'required|string',
-            'due_date' => 'required|string',
+            'user_id' => 'required|integer',
+            'unit_id' => 'required|integer',
+            'monthly_amount' => 'required|numeric',
+            'due_date' => 'required|integer',
             'date_start' => 'required|string',
-            'date_end' => 'required|string',
         ]);
 
         $rental = Rental::create($fields);
-        $user = auth('sanctum')->user()->id;
+        // $user = auth('sanctum')->user()->id;
 
         $response = [
-            'user' => $user,
+            // 'user' => $user,
             'rental' => $rental
         ];
 
-        return response($response, 201);
+        return $rental;
     }
 
     /**
@@ -101,7 +100,7 @@ class RentalController extends Controller
     {
         //
     }
-    
+
     /**
      * Archive specified resource.
      */

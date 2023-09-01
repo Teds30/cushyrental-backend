@@ -128,6 +128,7 @@ Route::get('landlord_verifications/{id}', [AccountVerificationController::class,
 Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
+Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
 

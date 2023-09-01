@@ -25,24 +25,26 @@ class AuthController extends Controller
 
         $fields = $request->validate([
             'first_name' => 'required|string',
-            // 'middle_name' => 'required|string',
+            'middle_name' => 'string',
             'last_name' => 'required|string',
             'gender' => 'required|string',
             'phone_number' => 'required|string',
             'user_type_id' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
+            'profile_picture_img' => 'string'
         ]);
 
         $user = User::create([
             'first_name' => $fields['first_name'],
-            // 'middle_name' => $fields['middle_name'],
+            'middle_name' => $fields['middle_name'],
             'last_name' => $fields['last_name'],
             'gender' => $fields['gender'],
             'phone_number' => $fields['phone_number'],
             'user_type_id' => $fields['user_type_id'],
             'email' => $fields['email'],
-            'password' => bcrypt($fields['password'])
+            'password' => $fields['password'],
+            'profile_picture_img' => 'images/profile_pictures/default/1.jpg'
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;
@@ -65,9 +67,11 @@ class AuthController extends Controller
         $user = User::where('email', $fields['email'])->first();
 
         if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Invalid Credentials.'
-            ], 401);
+            // return response([
+            //     'user' => [],
+            //     'message' => 'Invalid Credentials.'
+            // ], 401);
+            return ['user' => null, 'token' => null];
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
