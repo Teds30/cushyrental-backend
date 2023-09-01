@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use function Laravel\Prompts\password;
+
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -86,4 +88,36 @@ class AuthController extends Controller
             'message' => 'Logged out'
         ];
     }
+
+    public function updatePassword(Request $request) {
+        $fields = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+    
+        // Check if the user with the provided email exists
+        $user = User::where('email', $fields['email'])->first();
+    
+        if (!$user) {
+            return response([
+                'message' => 'Email is not registered.'
+            ], 401);
+        }
+    
+        // Update the user's password
+        $user->update([
+            'password' => bcrypt($fields['password']) // You should hash the password
+        ]);
+    
+        // Create a new token
+        $token = $user->createToken('myapptoken')->plainTextToken;
+    
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+    
+        return response($response, 201);
+    }
+    
 }
