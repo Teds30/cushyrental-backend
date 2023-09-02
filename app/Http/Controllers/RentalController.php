@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Rental;
 use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
+use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RentalController extends Controller
@@ -39,18 +41,30 @@ class RentalController extends Controller
         $fields = $request->validate([
             'user_id' => 'required|integer',
             'unit_id' => 'required|integer',
+            'slots' => 'required|integer',
             'monthly_amount' => 'required|numeric',
             'due_date' => 'required|integer',
             'date_start' => 'required|string',
         ]);
 
         $rental = Rental::create($fields);
-        // $user = auth('sanctum')->user()->id;
 
-        $response = [
-            // 'user' => $user,
-            'rental' => $rental
-        ];
+        if ($rental) {
+            $unit = Unit::find($request->unit_id)->first();
+            if ($unit) {
+                $req_slots = $request->slots;
+                $unit_slots = $unit->slots;
+
+                $new_slots = $unit_slots - $req_slots;
+                $unit->update(["slots" => $new_slots]);
+            }
+        }
+
+        // $user = auth('sanctum')->user()->id;
+        // $response = [
+        //     // 'user' => $user,
+        //     'rental' => $rental
+        // ];
 
         return $rental;
     }
@@ -60,11 +74,14 @@ class RentalController extends Controller
      */
     public function show($id)
     {
-        $res = Rental::get()->where('id', $id)->where('status', 1);
+        $res = Rental::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
+
+        $res->user;
+        $res->unit;
 
         return $res;
     }
@@ -115,5 +132,24 @@ class RentalController extends Controller
         $res->update(['status' => 0]);
 
         return $res;
+    }
+
+    public function landlord_tenants($landlord_id)
+    {
+
+        $res = User::get()->where('id', $landlord_id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $units = $res->units;
+        $tenants = array();
+        foreach ($units as $unit) {
+            foreach ($unit->rentals as $rental) {
+                $tenants[] = $rental->user;
+            }
+        }
+        return $tenants;
     }
 }

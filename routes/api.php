@@ -87,6 +87,8 @@ Route::put('rentals/{id}', [RentalController::class, "update"]);
 Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 
 
+Route::get('landlord_tenants/{id}', [RentalController::class, "landlord_tenants"]);
+
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);
 Route::post('amenities', [AmenityController::class, "store"]);
@@ -132,4 +134,5 @@ Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
 
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
+Route::post('/google/login', [GoogleAuthController::class, 'login']);
 Route::post('/facebook/auth', [FacebookAuthController::class, 'register']);

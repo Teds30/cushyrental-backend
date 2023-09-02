@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('unit_id');
+            $table->integer('slots')->default(1);
             $table->float('monthly_amount');
             $table->integer('due_date');
             $table->date('date_start');

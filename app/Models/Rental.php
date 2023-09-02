@@ -12,6 +12,7 @@ class Rental extends Model
     protected $fillable = [
         'user_id',
         'unit_id',
+        'slots',
         'monthly_amount',
         'due_date',
         'date_start',
@@ -19,7 +20,7 @@ class Rental extends Model
         'rental_status',
         'status',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
