@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $res = User::get()->where('id', $id)->where('status', 1)->firstOrFail();
+        $res = User::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
@@ -65,7 +65,11 @@ class UserController extends Controller
 
 
         if ($res) {
+
             $out = $res->units()->where('status', '1')->get();
+            foreach ($out as $o) {
+                $o->subscriptions;
+            }
         }
         return $out;
     }
