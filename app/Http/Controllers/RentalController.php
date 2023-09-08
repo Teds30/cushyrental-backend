@@ -86,6 +86,7 @@ class RentalController extends Controller
         return $res;
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -151,5 +152,25 @@ class RentalController extends Controller
             }
         }
         return $tenants;
+    }
+
+
+    public function landlord_rental_show($landlord_id)
+    {
+        $res = User::get()->where('id', $landlord_id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $units = $res->units;
+        $rentals = array();
+        foreach ($units as $unit) {
+            foreach ($unit->rentals as $rental) {
+                $rental->user;
+                $rentals[] = $rental;
+            }
+        }
+        return $rentals;
     }
 }

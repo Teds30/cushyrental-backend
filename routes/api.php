@@ -78,7 +78,7 @@ Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
 Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
 Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
 
-Route::get('rentals', [RentalController::class, "index"])->middleware('admin');
+Route::get('rentals', [RentalController::class, "index"]);
 
 
 //TODO: Verify sender
@@ -86,6 +86,9 @@ Route::get('rentals/{id}', [RentalController::class, "show"]);
 Route::post('rentals', [RentalController::class, "store"]);
 Route::put('rentals/{id}', [RentalController::class, "update"]);
 Route::delete('rentals/{id}', [RentalController::class, "archive"]);
+
+
+Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
 
 
 Route::get('landlord_tenants/{id}', [RentalController::class, "landlord_tenants"]);
