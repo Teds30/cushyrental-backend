@@ -173,4 +173,18 @@ class RentalController extends Controller
         }
         return $rentals;
     }
+
+
+    public function terminate($id)
+    {
+        $res = Rental::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->update(["rental_status" => 4]);
+
+        return $res;
+    }
 }

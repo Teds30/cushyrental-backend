@@ -86,6 +86,7 @@ Route::get('rentals/{id}', [RentalController::class, "show"]);
 Route::post('rentals', [RentalController::class, "store"]);
 Route::put('rentals/{id}', [RentalController::class, "update"]);
 Route::delete('rentals/{id}', [RentalController::class, "archive"]);
+Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
 
 
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
