@@ -168,6 +168,7 @@ class RentalController extends Controller
         foreach ($units as $unit) {
             foreach ($unit->rentals as $rental) {
                 $rental->user;
+                $rental->unit;
                 $rentals[] = $rental;
             }
         }
