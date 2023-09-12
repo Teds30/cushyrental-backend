@@ -21,6 +21,13 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\AccountVerificationController;
 use App\Http\Controllers\IdentificationCardTypeController;
+use App\Http\Controllers\UnitAmenityController;
+use App\Http\Controllers\UnitFacilityController;
+use App\Http\Controllers\UnitImageController;
+use App\Http\Controllers\UnitInclusionController;
+use App\Http\Controllers\UnitRuleController;
+use App\Http\Controllers\UnitSubscriptionController;
+use App\Models\UnitImage;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,11 +78,29 @@ Route::delete('units/{id}', [UnitController::class, "archive"]);
 
 
 Route::get('unit_facilities/{id}', [UnitController::class, "unit_facilities"]);
+Route::post('unit_facilities', [UnitFacilityController::class, "store"]);
+Route::delete('unit_facilities/{id}', [UnitFacilityController::class, "destroy"]);
+
 Route::get('unit_amenities/{id}', [UnitController::class, "unit_amenities"]);
+Route::post('unit_amenities', [UnitAmenityController::class, "store"]);
+Route::delete('unit_amenities/{id}', [UnitAmenityController::class, "destroy"]);
+
 Route::get('unit_inclusions/{id}', [UnitController::class, "unit_inclusions"]);
+Route::post('unit_inclusions', [UnitInclusionController::class, "store"]);
+Route::delete('unit_inclusions/{id}', [UnitInclusionController::class, "destroy"]);
+
 Route::get('unit_rules/{id}', [UnitController::class, "unit_rules"]);
+Route::post('unit_rules', [UnitRuleController::class, "store"]);
+Route::delete('unit_rules/{id}', [UnitRuleController::class, "destroy"]);
+
 Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
+Route::post('unit_images', [UnitImageController::class, "store"]);
+Route::delete('unit_images/{id}', [UnitImageController::class, "destroy"]);
+
 Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
+Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
+Route::delete('unit_subscriptions/{id}', [UnitSubscriptionController::class, "destroy"]);
+
 Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
 
 Route::get('rentals', [RentalController::class, "index"]);
@@ -88,11 +113,8 @@ Route::put('rentals/{id}', [RentalController::class, "update"]);
 Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
 
-
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
-
-
-Route::get('landlord_tenants/{id}', [RentalController::class, "landlord_tenants"]);
+Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"]);
 
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);

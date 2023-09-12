@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UnitFacility;
 use App\Http\Requests\StoreUnitFacilityRequest;
 use App\Http\Requests\UpdateUnitFacilityRequest;
+use Illuminate\Http\Request;
 
 class UnitFacilityController extends Controller
 {
@@ -27,9 +28,16 @@ class UnitFacilityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitFacilityRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'facility_id' => 'required|integer',
+        ]);
+
+        $res = UnitFacility::create($fields);
+
+        return $res;
     }
 
     /**
@@ -59,8 +67,16 @@ class UnitFacilityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UnitFacility $unitFacility)
+    public function destroy($id)
     {
-        //
+        $res = UnitFacility::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

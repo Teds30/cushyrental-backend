@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UnitAmenity;
 use App\Http\Requests\StoreUnitAmenityRequest;
 use App\Http\Requests\UpdateUnitAmenityRequest;
+use Illuminate\Http\Request;
 
 class UnitAmenityController extends Controller
 {
@@ -27,9 +28,16 @@ class UnitAmenityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitAmenityRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'amenity_id' => 'required|string',
+        ]);
+
+        $res = UnitAmenity::create($fields);
+
+        return $res;
     }
 
     /**
@@ -59,8 +67,16 @@ class UnitAmenityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UnitAmenity $unitAmenity)
+    public function destroy($id)
     {
-        //
+        $res = UnitAmenity::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

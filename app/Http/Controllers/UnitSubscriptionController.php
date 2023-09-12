@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UnitSubscription;
 use App\Http\Requests\StoreUnitSubscriptionRequest;
 use App\Http\Requests\UpdateUnitSubscriptionRequest;
+use Illuminate\Http\Request;
 
 class UnitSubscriptionController extends Controller
 {
@@ -27,9 +28,20 @@ class UnitSubscriptionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitSubscriptionRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'subscription_id' => 'required|integer',
+            'date_start' => 'required|string',
+            'date_end' => 'string',
+            'type' => 'integer',
+            'request_status' => 'integer',
+        ]);
+
+        $res = UnitSubscription::create($fields);
+
+        return $res;
     }
 
     /**
@@ -59,8 +71,16 @@ class UnitSubscriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UnitSubscription $unitSubscription)
+    public function destroy($id)
     {
-        //
+        $res = UnitSubscription::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

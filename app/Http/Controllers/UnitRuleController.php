@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UnitRule;
 use App\Http\Requests\StoreUnitRuleRequest;
 use App\Http\Requests\UpdateUnitRuleRequest;
+use Illuminate\Http\Request;
 
 class UnitRuleController extends Controller
 {
@@ -27,9 +28,16 @@ class UnitRuleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitRuleRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'rule_id' => 'required|integer',
+        ]);
+
+        $res = UnitRule::create($fields);
+
+        return $res;
     }
 
     /**
@@ -59,8 +67,16 @@ class UnitRuleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UnitRule $unitRule)
+    public function destroy($id)
     {
-        //
+        $res = UnitRule::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }
