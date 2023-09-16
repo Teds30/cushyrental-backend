@@ -35,6 +35,15 @@ class UnitInclusionController extends Controller
             'inclusion_id' => 'required|integer',
         ]);
 
+        $userExist = UnitInclusion::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['inclusion_id', '=', $fields['inclusion_id']]
+        ])->first();
+
+        if ($userExist) {
+            return $userExist;
+        }
+
         $res = UnitInclusion::create($fields);
 
         return $res;

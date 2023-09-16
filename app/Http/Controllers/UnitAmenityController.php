@@ -35,6 +35,15 @@ class UnitAmenityController extends Controller
             'amenity_id' => 'required|string',
         ]);
 
+        $userExist = UnitAmenity::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['amenity_id', '=', $fields['amenity_id']]
+        ])->first();
+
+        if ($userExist) {
+            return $userExist;
+        }
+
         $res = UnitAmenity::create($fields);
 
         return $res;
