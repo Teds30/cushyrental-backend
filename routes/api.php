@@ -70,6 +70,7 @@ Route::put('account_verifications/{id}', [AccountVerificationController::class, 
 Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
 
 
+Route::get('units_stats', [UnitController::class, "unit_stats"]);
 Route::get('units', [UnitController::class, "index"]);
 Route::get('units/{id}', [UnitController::class, "show"]);
 Route::post('units', [UnitController::class, "store"]);
@@ -115,6 +116,8 @@ Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
 
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
 Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"]);
+Route::get('landlord_units_stats/{id}', [RentalController::class, "landlord_units_stats"]);
+Route::get('landlord_upcoming_events/{id}', [RentalController::class, "landlord_upcoming_events"]);
 
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);

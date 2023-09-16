@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
 use App\Models\Unit;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RentalController extends Controller
@@ -173,6 +174,97 @@ class RentalController extends Controller
             }
         }
         return $rentals;
+    }
+
+    public function landlord_upcoming_events($landlord_id)
+    {
+        $res = User::get()->where('id', $landlord_id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        $mytime = Carbon::now('Asia/Manila');
+        $day = $mytime->format('d');
+        $month = $mytime->month;
+        $year = $mytime->year;
+
+
+
+        $units = $res->units;
+        $events = array();
+
+        foreach ($units as $unit) {
+            foreach ($unit->rentals as $rental) {
+                $rental->user;
+                $rental->unit;
+                if ($rental['due_date'] >= $day) {
+
+
+                    $ed = $year . '-' . $month . '-' . $rental['due_date'];
+                    $event_date = Carbon::createFromFormat('Y-m-d', $ed);
+                    $dayOfWeek = $event_date->dayOfWeek;
+                    $weekMap = [
+                        0 => 'SUN',
+                        1 => 'MON',
+                        2 => 'TUE',
+                        3 => 'WED',
+                        4 => 'THU',
+                        5 => 'FRI',
+                        6 => 'SAT',
+                    ];
+                    $weekday = $weekMap[$dayOfWeek];
+                    $rental['dayOfWeek'] = $weekday;
+
+                    $events[] = $rental;
+                }
+            }
+        }
+        return $events;
+    }
+
+    public function landlord_units_stats($landlord_id)
+    {
+        $res = User::get()->where('id', $landlord_id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $units_count = count($res->units);
+
+        $listed_count = 0;
+        $unlisted_count = 0;
+        $occupied_count = 0;
+        $pending_count = 0;
+        $tenants = array();
+
+        foreach ($res->units as $unit) {
+            if ($unit['is_listed'] == 1) {
+                $listed_count++;
+            } else {
+                $unlisted_count++;
+            }
+
+            if ($unit['request_status'] == 0) {
+                $pending_count++;
+            }
+            if ($unit['slots'] == 0) {
+                $occupied_count++;
+            }
+
+            foreach ($unit->rentals as $rental) {
+                $tenants[] = $rental->user['id'];
+            }
+        }
+
+        return [
+            "units_count" => $units_count,
+            "listed_count" => $listed_count,
+            "unlisted_count" => $unlisted_count,
+            "pending_count" => $pending_count,
+            "occupied_count" => $occupied_count,
+            "tenants_count" => count(array_unique($tenants))
+        ];
     }
 
 
