@@ -33,7 +33,18 @@ class UnitFacilityController extends Controller
         $fields = $request->validate([
             'unit_id' => 'required|integer',
             'facility_id' => 'required|integer',
+            'is_shared' => 'integer'
         ]);
+
+        $facilityExist = UnitFacility::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['facility_id', '=', $fields['facility_id']]
+        ])->first();
+
+        if ($facilityExist) {
+            $facilityExist->update($request->all());
+            return $facilityExist;
+        }
 
         $res = UnitFacility::create($fields);
 

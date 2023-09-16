@@ -35,6 +35,15 @@ class UnitRuleController extends Controller
             'rule_id' => 'required|integer',
         ]);
 
+        $userExist = UnitRule::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['rule_id', '=', $fields['rule_id']]
+        ])->first();
+
+        if ($userExist) {
+            return $userExist;
+        }
+
         $res = UnitRule::create($fields);
 
         return $res;
