@@ -33,7 +33,18 @@ class UnitImageController extends Controller
         $fields = $request->validate([
             'unit_id' => 'required|integer',
             'image_id' => 'required|integer',
+            'is_thumbnail' => 'integer',
         ]);
+
+        $imageExist = UnitImage::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['image_id', '=', $fields['image_id']]
+        ])->first();
+
+        if ($imageExist) {
+            $imageExist->update($request->all());
+            return $imageExist;
+        }
 
         $res = UnitImage::create($fields);
 
@@ -67,16 +78,30 @@ class UnitImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $res = UnitImage::get()->where('id', $id)->first();
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'image_id' => 'required|integer',
+        ]);
 
-        if (!$res || !$res->count()) {
-            return response()->json([], 404);
+        $imageExist = UnitImage::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['image_id', '=', $fields['image_id']]
+        ])->first();
+
+        if ($imageExist) {
+            $imageExist->delete();
+            return $imageExist;
         }
+        // $res = UnitImage::get()->where('id', $id)->first();
 
-        $res->delete();
+        // if (!$res || !$res->count()) {
+        //     return response()->json([], 404);
+        // }
 
-        return $res;
+        // $res->delete();
+
+        // return $res;
     }
 }

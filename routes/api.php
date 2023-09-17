@@ -95,7 +95,7 @@ Route::delete('unit_rules/{id}', [UnitRuleController::class, "destroy"]);
 
 Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
 Route::post('unit_images', [UnitImageController::class, "store"]);
-Route::delete('unit_images/{id}', [UnitImageController::class, "destroy"]);
+Route::delete('unit_images/', [UnitImageController::class, "destroy"]);
 
 Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
 Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
