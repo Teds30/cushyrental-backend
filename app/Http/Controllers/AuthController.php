@@ -44,7 +44,7 @@ class AuthController extends Controller
             'user_type_id' => $fields['user_type_id'],
             'email' => $fields['email'],
             'password' => $fields['password'],
-            'profile_picture_img' => 'images/profile_pictures/default/1.jpg'
+            'profile_picture_img' => $fields['profile_picture_img']
         ]);
 
         $token = $user->createToken('myapptoken')->plainTextToken;

@@ -141,9 +141,17 @@ class UnitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Unit $unit)
+    public function destroy($id)
     {
-        //
+        $res = Unit::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 
     /**

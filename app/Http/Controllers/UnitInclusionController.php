@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UnitInclusion;
 use App\Http\Requests\StoreUnitInclusionRequest;
 use App\Http\Requests\UpdateUnitInclusionRequest;
+use Illuminate\Http\Request;
 
 class UnitInclusionController extends Controller
 {
@@ -27,9 +28,25 @@ class UnitInclusionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitInclusionRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'unit_id' => 'required|integer',
+            'inclusion_id' => 'required|integer',
+        ]);
+
+        $userExist = UnitInclusion::where([
+            ['unit_id', '=', $fields['unit_id']],
+            ['inclusion_id', '=', $fields['inclusion_id']]
+        ])->first();
+
+        if ($userExist) {
+            return $userExist;
+        }
+
+        $res = UnitInclusion::create($fields);
+
+        return $res;
     }
 
     /**
@@ -59,8 +76,16 @@ class UnitInclusionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UnitInclusion $unitInclusion)
+    public function destroy($id)
     {
-        //
+        $res = UnitInclusion::get()->where('id', $id)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $res->delete();
+
+        return $res;
     }
 }

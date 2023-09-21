@@ -44,9 +44,9 @@ class ImageController extends Controller
             $filePath = $request->file('image')->storeAs($path, $name, 'uploads');
             // Storage::disk('myDisk')->put('/attribute_icons/' . $name, file_get_contents($image));
 
-            Image::create(['image' => $filePath]);
+            $res = Image::create(['image' => $filePath]);
 
-            return response()->json(['success' => 'Uploaded successfully', 'path' => $path, 'name' => $name]);
+            return response()->json(['success' => 'Uploaded successfully', 'path' => $path, 'name' => $name, 'image' => $res]);
         }
         return response()->json('Failed to upload.');
     }
