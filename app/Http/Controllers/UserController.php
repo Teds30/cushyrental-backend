@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Amenity;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -70,6 +71,10 @@ class UserController extends Controller
             foreach ($out as $o) {
                 $o->subscriptions;
                 $o->images;
+                $o->amenities;
+                foreach ($o->amenities as $amenity) {
+                    $amenity->amenity;
+                }
             }
         }
         return $out;
