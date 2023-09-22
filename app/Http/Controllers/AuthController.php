@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         $user = User::create([
             'first_name' => $fields['first_name'],
-            'middle_name' => $fields['middle_name'],
+            'middle_name' => $fields['middle_name'] ?? '',
             'last_name' => $fields['last_name'],
             'gender' => $fields['gender'],
             'phone_number' => $fields['phone_number'],
@@ -93,35 +93,35 @@ class AuthController extends Controller
         ];
     }
 
-    public function updatePassword(Request $request) {
+    public function updatePassword(Request $request)
+    {
         $fields = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
-    
+
         // Check if the user with the provided email exists
         $user = User::where('email', $fields['email'])->first();
-    
+
         if (!$user) {
             return response([
                 'message' => 'Email is not registered.'
             ], 401);
         }
-    
+
         // Update the user's password
         $user->update([
             'password' => bcrypt($fields['password']) // You should hash the password
         ]);
-    
+
         // Create a new token
         $token = $user->createToken('myapptoken')->plainTextToken;
-    
+
         $response = [
             'user' => $user,
             'token' => $token
         ];
-    
+
         return response($response, 201);
     }
-    
 }
