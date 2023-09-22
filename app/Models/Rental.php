@@ -29,4 +29,8 @@ class Rental extends Model
     {
         return $this->belongsTo(Unit::class, 'unit_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\AccountVerificationController;
 use App\Http\Controllers\IdentificationCardTypeController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UnitAmenityController;
 use App\Http\Controllers\UnitFacilityController;
 use App\Http\Controllers\UnitImageController;
@@ -103,6 +104,8 @@ Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
 Route::delete('unit_subscriptions/{id}', [UnitSubscriptionController::class, "destroy"]);
 
 Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
+Route::get('unit_reviews/{id}', [UnitController::class, "unit_reviews"]);
+Route::get('unit_reviews_total/{id}', [UnitController::class, "unit_reviews_total"]);
 
 Route::get('rentals', [RentalController::class, "index"]);
 
@@ -113,6 +116,8 @@ Route::post('rentals', [RentalController::class, "store"]);
 Route::put('rentals/{id}', [RentalController::class, "update"]);
 Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
+
+Route::get('reviews', [ReviewController::class, "index"]);
 
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
 Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"]);

@@ -13,6 +13,7 @@ use App\Models\Image;
 use App\Models\Inclusion;
 use App\Models\Rental;
 use App\Models\ReportedUser;
+use App\Models\Review;
 use App\Models\Rule;
 use App\Models\Subscription;
 use App\Models\Unit;
@@ -96,5 +97,8 @@ class DatabaseSeeder extends Seeder
         UnitImage::factory()->create();
         UnitSubscription::factory()->create();
         Rental::factory()->create();
+
+        
+        Review::factory()->count(5)->create();
     }
 }

@@ -364,4 +364,40 @@ class UnitController extends Controller
         }
         return $out;
     }
+
+    public function unit_reviews($id)
+    {
+        $res = Unit::find($id);
+        $out = array();
+
+
+        if ($res) {
+            $rentals = $res->rentals;
+
+            foreach ($rentals as $u_rental) {
+                if ($u_rental['status'] == 1) {
+                    $out = $u_rental->reviews;
+                }
+            }
+        }
+        return $out;
+    }
+
+    public function unit_reviews_total($id)
+    {
+        $res = $this->unit_reviews($id);
+
+        if (!$res) return ["unit_id" => intval($id), "average" => 0, "reviews" => 0];
+
+        $average = 0;
+        $sum = 0;
+        $count = count($res);
+
+        foreach ($res as $review) {
+            $sum += intval($review['star']);
+        }
+
+        $average = $sum / $count;
+        return ["unit_id" => intval($id), "average" => $average, "reviews" => $count];
+    }
 }
