@@ -92,8 +92,10 @@ class Unit extends Model
             $sum += intval($review['star']);
         }
 
+        if ($count === 0) {
+            return 0;
+        }
         $average = $sum / $count;
         return $average;
-        return $id;
     }
 }
