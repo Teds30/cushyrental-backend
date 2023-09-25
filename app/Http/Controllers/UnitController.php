@@ -91,6 +91,7 @@ class UnitController extends Controller
         }
 
         $res->landlord;
+        $res->get_average_ratings();
 
         $out = array();
 
@@ -101,7 +102,6 @@ class UnitController extends Controller
         $images = $this->unit_images($id);
         $subscriptions = $this->unit_subscriptions($id);
         $rentals = $this->unit_rentals($id);
-        $average_ratings = $this->unit_reviews_total($id);
 
         $res['amenities'] = $amenities;
         $res['facilities'] = $facilities;
@@ -110,7 +110,7 @@ class UnitController extends Controller
         $res['images'] = $images;
         $res['subscriptions'] = $subscriptions;
         $res['rentals'] = $rentals;
-        $res['average_ratings'] = $average_ratings['average'];
+        $res['average_ratings'] = $res->get_average_ratings();
 
         return $res;
     }
