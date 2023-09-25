@@ -64,4 +64,36 @@ class Unit extends Model
     {
         return $this->hasMany(Rental::class);
     }
+
+    public function unit_reviews($id)
+    {
+        $out = array();
+
+        $rentals = $this->rentals;
+
+        foreach ($rentals as $u_rental) {
+            if ($u_rental['status'] == 1) {
+                $out = $u_rental->reviews;
+            }
+        }
+        return $out;
+    }
+
+    public function get_average_ratings()
+    {
+        $id = $this->attributes['id'];
+        $res = $this->unit_reviews($id);
+
+        $average = 0;
+        $sum = 0;
+        $count = count($res);
+
+        foreach ($res as $review) {
+            $sum += intval($review['star']);
+        }
+
+        $average = $sum / $count;
+        return $average;
+        return $id;
+    }
 }
