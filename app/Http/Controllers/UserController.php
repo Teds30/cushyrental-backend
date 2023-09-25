@@ -18,7 +18,6 @@ class UserController extends Controller
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
-
         return $res;
     }
 
@@ -39,6 +38,9 @@ class UserController extends Controller
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
+        }
+        if ($res['user_type_id'] == 2) {
+            $res['total_ratings'] = $res->get_total_ratings();
         }
         return $res;
     }

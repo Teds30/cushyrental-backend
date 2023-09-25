@@ -71,4 +71,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReportedUser::class, 'user_id');
     }
+
+    public function get_total_ratings()
+    {
+        $id = $this->attributes['id'];
+        $units = Unit::get()->where('landlord_id', $id);
+        $ratings = [];
+        foreach ($units as $unit) {
+            $ratings[] = $unit->get_average_ratings();
+        }
+
+        if (count($ratings) == 0) {
+            return 0;
+        }
+
+        $total = array_sum($ratings) / count($ratings);
+        return $total;
+    }
 }
