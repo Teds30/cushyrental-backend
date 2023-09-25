@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('account_verifications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('checked_by_id');
+            $table->unsignedBigInteger('checked_by_id')->nullable();
             $table->unsignedBigInteger('identification_card_type_id');
             $table->tinyInteger('verdict')->nullable();
             $table->string('denied_reason')->nullable();
