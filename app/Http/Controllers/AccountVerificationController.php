@@ -43,20 +43,20 @@ class AccountVerificationController extends Controller
     {
         $fields = $request->validate([
             'user_id' => 'required',
-            'checked_by' => 'required',
+            'checked_by_id' => 'integer',
             'verdict' => 'string',
             'denied_reason' => 'string',
             'submitted_id_image_url' => 'required|string',
-            'identification_card_type' => 'required|integer',
+            'identification_card_type_id' => 'required|integer',
             'address' => 'required|string',
             'contact_number' => 'required|string',
         ]);
 
         $acc_ver = AccountVerification::create($fields);
-        $user = auth('sanctum')->user()->id;
+        // $user = auth('sanctum')->user()->id;
 
         $response = [
-            'user' => $user,
+            // 'user' => $user,
             'res' => $acc_ver
         ];
 
