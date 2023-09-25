@@ -69,6 +69,7 @@ class UserController extends Controller
 
             $out = $res->units()->where('status', '1')->get();
             foreach ($out as $o) {
+                $o['average_ratings'] = $o->get_average_ratings();
                 $o->subscriptions;
                 $o->images;
                 $o->amenities;
