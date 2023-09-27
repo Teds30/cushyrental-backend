@@ -108,6 +108,7 @@ Route::get('unit_reviews/{id}', [UnitController::class, "unit_reviews"]);
 Route::get('unit_reviews_total/{id}', [UnitController::class, "unit_reviews_total"]);
 
 Route::get('rentals', [RentalController::class, "index"]);
+Route::get('user_subscriptions/{landlord_id}', [UnitSubscriptionController::class, "user_subscriptions"]);
 
 
 //TODO: Verify sender

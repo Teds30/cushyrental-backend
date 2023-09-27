@@ -38,6 +38,23 @@ class ImageController extends Controller
     {
         $path = $request->path ?? 'images';
         if ($request->has('image')) {
+            $file = $request->file('image');
+
+            // $is_valid = $request->validate([
+            //     'image' => 'mimes:jpeg,bmp,png|max:1128', // 1128 KB (1 MB) maximum size
+            // ]);
+
+            // Check if the file is an image based on its mime type
+            if (!in_array($file->getClientMimeType(), ['image/jpeg', 'image/bmp', 'image/png'])) {
+                return  response()->json(['error' => 'The uploaded file is not a valid image.']);
+            }
+
+            // Check the file size
+            $maxFileSize = 1128 * 5000; // 1128 KB in bytes
+            if ($file->getSize() > $maxFileSize) {
+                return  response()->json(['error' => 'The image size exceeds the maximum allowed size of 5 MB.']);
+            }
+
             $image = $request->file('image');
             $name = $request->name . '_' . time() . '.' . $image->getClientOriginalExtension();
             // $image->move('images/', $name);
@@ -48,7 +65,7 @@ class ImageController extends Controller
 
             return response()->json(['success' => 'Uploaded successfully', 'path' => $path, 'name' => $name, 'image' => $res]);
         }
-        return response()->json('Failed to upload.');
+        return response()->json(['error' => 'Failed to upload.']);
     }
 
     /**
