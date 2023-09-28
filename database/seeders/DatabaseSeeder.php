@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
         )->create();
 
 
-        Unit::factory()->count(1)->sequence(
+        Unit::factory()->count(3)->sequence(
             ['landlord_id' => 1, 'name' => 'Jano Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.143972, 123.727927', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
         )->create();
 
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
         UnitSubscription::factory()->create();
         Rental::factory()->create();
 
-        
+
         Review::factory()->count(5)->create();
     }
 }

@@ -12,6 +12,10 @@ class UnitSubscription extends Model
     protected $fillable = [
         'unit_id',
         'subscription_id',
+        'pop_image_id',
+        'account_name',
+        'account_number',
+        'email_address',
         'date_start',
         'date_end',
         'type',
@@ -26,5 +30,9 @@ class UnitSubscription extends Model
     public function subscription()
     {
         return $this->belongsTo(Subscription::class, 'subscription_id');
+    }
+    public function proof_of_payment()
+    {
+        return $this->belongsTo(Image::class, 'pop_image_id');
     }
 }

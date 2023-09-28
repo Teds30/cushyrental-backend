@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('unit_id');
             $table->unsignedBigInteger('subscription_id');
-            $table->date('date_start');
-            $table->date('date_end')->nullable();
+            $table->unsignedBigInteger('pop_image_id');
+            $table->string('account_name');
+            $table->string('account_number');
+            $table->string('email_address');
+            $table->timestamp('date_start')->nullable();
+            $table->timestamp('date_end')->nullable();
             $table->tinyInteger('type')->default(0)->comment('0 -> active | 1 -> expired | 2 -> terminated');
             $table->tinyInteger('request_status')->default(0)->comment('0 -> pending | 1 -> approved | 2 -> denied');
             $table->timestamps();
@@ -28,6 +32,9 @@ return new class extends Migration
             $table->foreign('subscription_id')
                 ->references('id')
                 ->on('subscriptions');
+            $table->foreign('pop_image_id')
+                ->references('id')
+                ->on('images');
         });
     }
 
