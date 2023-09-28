@@ -48,9 +48,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $res = User::find($id);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $fields = $request->validate([
+            'first_name' => 'required|string',
+            'middle_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'gender' => 'required|string',
+            'profile_picture_img' => 'required|string'
+        ]);
+
+        $res->update([
+            'first_name' => $fields['first_name'],
+            'middle_name' => $fields['middle_name'],
+            'last_name' => $fields['last_name'],
+            'phone_number' => $fields['phone_number'],
+            'gender' => $fields['gender'],
+            'profile_picture_img' => $fields['profile_picture_img']
+        ]);
+
+        return $res;
     }
 
     /**
