@@ -81,6 +81,17 @@ class ImageController extends Controller
         }
     }
 
+    public function showAvatar(Request $request)
+    {
+        $pathToFile = storage_path("app/uploads/profile_pictures/" . $request->image_path);
+        try {
+            return response()->file($pathToFile);
+        } catch (ExceptionFileNotFoundException $exception) {
+            return response()->json("File not found.", 404);
+        }
+    }
+
+
     public function showChatImage($room_id, $fileName)
     {
         $pathToFile = storage_path("app/uploads/chats/" . $room_id . "/" . $fileName);
