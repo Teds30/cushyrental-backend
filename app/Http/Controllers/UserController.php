@@ -76,6 +76,13 @@ class UserController extends Controller
 
         return $res;
     }
+    
+    public function user_data(Request $request)
+    {
+        $res = $request->user();
+
+        return $res;
+    }
 
     /**
      * Remove the specified resource from storage.
