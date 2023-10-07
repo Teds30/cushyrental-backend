@@ -280,4 +280,19 @@ class RentalController extends Controller
 
         return $res;
     }
+
+    public function tenant_rental_show($id)
+    {
+        $res = User::get()->where('id', $id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+
+        $rentals = $res->rentals ?? [];
+        foreach ($rentals as $rental) {
+            $rental->unit;
+        }
+        return $rentals;
+    }
 }
