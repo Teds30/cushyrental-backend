@@ -47,6 +47,8 @@ class AuthController extends Controller
             'profile_picture_img' => $fields['profile_picture_img']
         ]);
 
+        $user = User::find($user->id);
+
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [

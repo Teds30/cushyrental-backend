@@ -5,7 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Unit;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
+use App\Models\Amenity;
 use Illuminate\Http\Request;
+use App\Models\UnitAmenity;
+use App\Models\UnitFacility;
+use App\Models\UnitImage;
+use App\Models\UnitInclusion;
+use App\Models\UnitRule;
 
 class UnitController extends Controller
 {
@@ -52,31 +58,43 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUnitRequest $request)
+    public function store(Request $request)
     {
+        $out = array();
+
         $fields = $request->validate([
-            'landlord_id' => 'required',
-            'name' => 'required|string',
-            'details' => 'required|string',
-            'price' => 'required|string',
-            'month_advance' => 'required|integer',
-            'month_deposit' => 'required|integer',
-            'location' => 'required|string',
-            'address' => 'required|string',
-            'target_gender' => 'required|integer',
-            'slots' => 'required|integer',
-            'is_listed' => 'required|integer',
+        'landlord_id' => 'required',
+        'name' => 'required|string',
+        'details' => 'required|string',
+        'price' => 'required|string',
+        'month_advance' => 'required|integer',
+        'month_deposit' => 'required|integer',
+        'location' => 'required|string',
+        'address' => 'required|string',
+        'target_gender' => 'required|integer',
+        'slots' => 'required|integer',
+        'is_listed' => 'integer',
         ]);
 
-        $unit = Unit::create($fields);
-        $user = auth('sanctum')->user()->id;
+        $out['unit'] = Unit::create($fields);
+        
+        // $user = auth('sanctum')->user()->id;
 
-        $response = [
-            'user' => $user,
-            'unit' => $unit
-        ];
+        // $response = [
+        //     'user' => $user,
+        //     'unit' => $unit
+        // ];
 
-        return response($response, 201);
+        // return response($response, 201);
+
+        $out['amenities'] = $this->save_amenity($request->amenities, $out['unit']->id);
+        $out['inclusions'] = $this->save_inclusion($request->inclusions, $out['unit']->id);
+        $out['rules'] = $this->save_rule($request->rules, $out['unit']->id);
+        $out['facilities'] = $this->save_facility($request->facilities, $out['unit']->id);
+        $out['images'] = $this->save_unit_image($request->images, $out['unit']->id);
+
+        return response($out, 200);
+        // return response($request, 201);
     }
 
     /**
@@ -402,4 +420,86 @@ class UnitController extends Controller
         $average = $sum / $count;
         return ["unit_id" => intval($id), "average" => $average, "reviews" => $count];
     }
+
+    // Saving attributes and unit images
+
+    public function save_amenity($amenities, $id)
+    {
+        $saveAmenity = array();
+        foreach ($amenities as $amenity) {
+            $saveAmenity[] = [UnitAmenity::create([
+                'unit_id' => $id,
+                'amenity_id' => $amenity
+            ])];
+        }
+
+        return $saveAmenity;
+    }
+
+    public function save_facility($facilities, $id)
+    {
+        $saveFacilities = array();
+
+        foreach ($facilities as $facility) {
+            $facility_id = intval($facility['id']);
+            $isShared = intval($facility['is_shared']);
+
+            $saveFacilities[] = UnitFacility::create([
+                'unit_id' => $id,
+                'facility_id' => $facility_id,
+                'is_shared' => $isShared,
+            ]);
+        }
+
+        return $saveFacilities;
+    }
+
+    public function save_inclusion($inclusions, $id)
+    {
+        $saveInclusions = array();
+        foreach ($inclusions as $inclusion) {
+            $saveInclusions[] = [UnitInclusion::create([
+                'unit_id' => $id,
+                'inclusion_id' => $inclusion
+            ])];
+        }
+
+        return $saveInclusions;
+    }
+
+    public function save_rule($rules, $id)
+    {
+        $saveRules = array();
+        foreach ($rules as $rule) {
+            $saveRules[] = [UnitRule::create([
+                'unit_id' => $id,
+                'rule_id' => $rule
+            ])];
+        }
+
+        return $saveRules;
+    }
+
+    public function save_unit_image($unitImages, $id)
+    {
+        $saveUnitImages = array();
+
+        foreach ($unitImages as $unitImage) {
+            $image_id = intval($unitImage['image_id']);
+            $is_thumbnail = intval($unitImage['is_thumbnail']);
+
+            $saveUnitImages[] = UnitImage::create([
+                'unit_id' => $id,
+                'image_id' => $image_id,
+                'is_thumbnail' => $is_thumbnail,
+            ]);
+        }
+
+        return $saveUnitImages;
+    }
 }
+
+// 'unit_id',
+//         'image_id',
+//         'is_thumbnail',
+

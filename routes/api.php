@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('users', [UserController::class, "index"]);
 Route::get('users/{id}', [UserController::class, "show"]);
 Route::get('user_units/{id}', [UserController::class, "user_units"]);
+Route::put('users/update/{id}', [UserController::class, "update"]);
 
 Route::get('user_types', [UserTypesController::class, "index"])->middleware('admin');
 Route::get('user_types/{id}', [UserTypesController::class, "show"])->middleware('admin');

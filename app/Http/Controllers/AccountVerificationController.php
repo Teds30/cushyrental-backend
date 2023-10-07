@@ -6,6 +6,7 @@ use App\Models\AccountVerification;
 use App\Http\Requests\StoreAccountVerificationRequest;
 use App\Http\Requests\UpdateAccountVerificationRequest;
 use Illuminate\Http\Request;
+use User;
 
 class AccountVerificationController extends Controller
 {
@@ -43,7 +44,7 @@ class AccountVerificationController extends Controller
     {
         $fields = $request->validate([
             'user_id' => 'required',
-            'checked_by_id' => 'integer',
+            'checked_by' => 'integer',
             'verdict' => 'string',
             'denied_reason' => 'string',
             'submitted_id_image_url' => 'required|string',
@@ -53,14 +54,15 @@ class AccountVerificationController extends Controller
         ]);
 
         $acc_ver = AccountVerification::create($fields);
+        // Teds may problem didi sa nakacomment "Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
         // $user = auth('sanctum')->user()->id;
 
-        $response = [
-            // 'user' => $user,
-            'res' => $acc_ver
-        ];
+        // $response = [
+        //     'user' => $user,
+        //     'res' => $acc_ver
+        // ];
 
-        return response($response, 201);
+        return response($acc_ver, 201);
     }
 
     /**
