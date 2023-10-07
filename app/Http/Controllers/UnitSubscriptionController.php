@@ -110,7 +110,8 @@ class UnitSubscriptionController extends Controller
                 if (!$img) {
                     $img = UnitImage::get()->where('unit_id', $sub->unit['id'])->first();
                 }
-                $sub->unit['image'] = $img->image->image;
+                if ($img)
+                    $sub->unit['image'] = $img->image->image;
             }
 
 
