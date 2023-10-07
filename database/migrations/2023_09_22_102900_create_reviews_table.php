@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('rental_id');
+            $table->integer('environment_star')->default(0);
+            $table->integer('unit_star')->default(0);
+            $table->integer('landlord_star')->default(0);
             $table->integer('star')->default(0);
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
+            $table->text('landlord_reply')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 

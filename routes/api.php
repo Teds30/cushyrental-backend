@@ -122,6 +122,8 @@ Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
 
 Route::get('reviews', [ReviewController::class, "index"]);
+Route::post('reviews', [ReviewController::class, "store"]);
+Route::post('reviews-landlord-reply', [ReviewController::class, "landlord_reply_store"]);
 
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
 Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"]);

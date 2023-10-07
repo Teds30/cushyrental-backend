@@ -19,10 +19,20 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
+        $e_star = fake()->numberBetween(1, 5);
+        $u_star = fake()->numberBetween(1, 5);
+        $l_star = fake()->numberBetween(1, 5);
+        $average_star = ($e_star + $u_star + $l_star) / 3;
+        $rounded_average_star = round($average_star, 2); // Round to 2 decimal places
+
+
         return [
             'user_id' => User::pluck('id')->random(),
             'rental_id' => Rental::pluck('id')->random(),
-            'star' => fake()->numberBetween(1, 5),
+            'environment_star' => $e_star,
+            'unit_star' => $u_star,
+            'landlord_star' => $l_star,
+            'star' => $rounded_average_star,
             'message' => fake()->sentence(5),
         ];
     }

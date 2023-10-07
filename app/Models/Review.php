@@ -12,8 +12,12 @@ class Review extends Model
     protected $fillable = [
         'user_id',
         'rental_id',
+        'environment_star',
+        'unit_star',
+        'landlord_star',
         'star',
         'message',
+        'landlord_reply',
         'status',
     ];
 
