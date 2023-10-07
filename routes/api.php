@@ -45,6 +45,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->get('user_data', [UserController::class, 'user_data']);
+
 Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
 Route::post('forgot_password', [AuthController::class, "updatePassword"]);
@@ -126,6 +128,8 @@ Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"
 Route::get('landlord_units_stats/{id}', [RentalController::class, "landlord_units_stats"]);
 Route::get('landlord_upcoming_events/{id}', [RentalController::class, "landlord_upcoming_events"]);
 
+Route::get('tenant-rentals/{id}', [RentalController::class, "tenant_rental_show"]);
+
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);
 Route::post('amenities', [AmenityController::class, "store"]);
@@ -169,6 +173,7 @@ Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
+Route::post('avatar', [ImageController::class, "showAvatar"]);
 
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
 Route::post('/google/login', [GoogleAuthController::class, 'login']);
