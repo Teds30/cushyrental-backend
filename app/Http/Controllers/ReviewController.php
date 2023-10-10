@@ -47,6 +47,7 @@ class ReviewController extends Controller
             'environment_star' => 'required|integer',
             'unit_star' => 'required|integer',
             'landlord_star' => 'required|integer',
+            'message' => 'string'
         ]);
 
         $review = Review::create($fields);
