@@ -399,6 +399,7 @@ class UnitController extends Controller
                     $out = $u_rental->reviews;
                     foreach ($u_rental->reviews as $review) {
                         $review->user;
+                        $review->rental->unit->landlord;
                     }
                 }
             }
