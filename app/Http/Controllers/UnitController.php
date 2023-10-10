@@ -63,21 +63,21 @@ class UnitController extends Controller
         $out = array();
 
         $fields = $request->validate([
-        'landlord_id' => 'required',
-        'name' => 'required|string',
-        'details' => 'required|string',
-        'price' => 'required|string',
-        'month_advance' => 'required|integer',
-        'month_deposit' => 'required|integer',
-        'location' => 'required|string',
-        'address' => 'required|string',
-        'target_gender' => 'required|integer',
-        'slots' => 'required|integer',
-        'is_listed' => 'integer',
+            'landlord_id' => 'required',
+            'name' => 'required|string',
+            'details' => 'required|string',
+            'price' => 'required|string',
+            'month_advance' => 'required|integer',
+            'month_deposit' => 'required|integer',
+            'location' => 'required|string',
+            'address' => 'required|string',
+            'target_gender' => 'required|integer',
+            'slots' => 'required|integer',
+            'is_listed' => 'integer',
         ]);
 
         $out['unit'] = Unit::create($fields);
-        
+
         // $user = auth('sanctum')->user()->id;
 
         // $response = [
@@ -397,6 +397,9 @@ class UnitController extends Controller
             foreach ($rentals as $u_rental) {
                 if ($u_rental['status'] == 1) {
                     $out = $u_rental->reviews;
+                    foreach ($u_rental->reviews as $review) {
+                        $review->user;
+                    }
                 }
             }
         }
@@ -502,4 +505,3 @@ class UnitController extends Controller
 // 'unit_id',
 //         'image_id',
 //         'is_thumbnail',
-
