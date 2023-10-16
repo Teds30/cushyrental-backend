@@ -35,6 +35,7 @@ class UnitController extends Controller
             $rules = $this->unit_rules($entry->id);
             $images = $this->unit_images($entry->id);
             $subscriptions = $this->unit_active_subscriptions($entry->id);
+            $ratings = $entry->get_average_ratings();
 
             $entry['amenities'] = $amenities;
             $entry['facilities'] = $facilities;
@@ -42,6 +43,7 @@ class UnitController extends Controller
             $entry['rules'] = $rules;
             $entry['images'] = $images;
             $entry['active_subscription'] = $subscriptions;
+            $entry['average_ratings'] = $ratings;
         }
 
         return $res;
