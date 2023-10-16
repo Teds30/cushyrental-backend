@@ -160,6 +160,9 @@ Route::get('subscriptions', [SubscriptionController::class, "index"]);
 Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
 Route::put('subscriptions/{id}', [SubscriptionController::class, "update"]);
 
+Route::get('gold_units', [SubscriptionController::class, "gold_units"]);
+Route::get('silver_units', [SubscriptionController::class, "silver_units"]);
+
 
 // Route::get('user_reports', [ReportedUserController::class, "index"]);
 Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
