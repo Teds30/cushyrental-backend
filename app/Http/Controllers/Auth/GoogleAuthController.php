@@ -11,6 +11,22 @@ use Ramsey\Uuid\Guid\Fields;
 class GoogleAuthController extends Controller
 {
 
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+
+        if ($user) {
+
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return response($response, 201);
+        }
+    }
     public function register(Request $request)
     {
         // Check if the user with the provided email already exists
