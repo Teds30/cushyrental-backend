@@ -23,8 +23,8 @@ return new class extends Migration
             $table->text('address');
             $table->tinyInteger('target_gender');
             $table->integer('slots');
-            $table->tinyInteger('is_listed')->default(1);
-            $table->tinyInteger('request_status')->default(1);
+            $table->tinyInteger('is_listed')->default(0);
+            $table->tinyInteger('request_status')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
