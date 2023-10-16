@@ -76,7 +76,7 @@ class UserController extends Controller
 
         return $res;
     }
-    
+
     public function user_data(Request $request)
     {
         $res = $request->user();
@@ -97,7 +97,6 @@ class UserController extends Controller
         $res = User::find($id);
         $out = array();
 
-
         if ($res) {
 
             $out = $res->units()->where('status', '1')->get();
@@ -108,6 +107,9 @@ class UserController extends Controller
                 $o->amenities;
                 foreach ($o->amenities as $amenity) {
                     $amenity->amenity;
+                }
+                foreach ($o->images as $image) {
+                    $image->image;
                 }
             }
         }
