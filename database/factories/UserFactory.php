@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'last_name' => fake()->lastName(),
             'gender' => fake()->numberBetween(1, 3),
             'phone_number' => fake()->phoneNumber(),
-            'profile_picture_img' => 'profile_pictures/default/1.png',
+            'profile_picture_img' => 'default/1.png',
             'user_type_id' => UserTypes::pluck('id')->random(),
             'is_verified' => 1,
             'status' => 1,

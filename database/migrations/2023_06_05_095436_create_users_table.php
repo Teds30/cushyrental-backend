@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->tinyInteger('gender')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('profile_picture_img')->default('profile_pictures/default/1.png');
+            $table->string('profile_picture_img')->default('default/1.png');
             $table->foreignId('user_type_id')
                 ->constrained();
             $table->tinyInteger('is_verified')->default(0);
