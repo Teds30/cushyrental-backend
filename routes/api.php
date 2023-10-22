@@ -20,6 +20,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\AccountVerificationController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\IdentificationCardTypeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UnitAmenityController;
@@ -44,8 +45,6 @@ use App\Models\UnitImage;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::middleware('auth:sanctum')->get('user_data', [UserController::class, 'user_data']);
 
 Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
@@ -81,6 +80,7 @@ Route::post('units', [UnitController::class, "store"]);
 Route::put('units/{id}', [UnitController::class, "update"]);
 Route::delete('units/{id}', [UnitController::class, "archive"]);
 
+Route::get('attributes', [AttributeController::class, "show"]);
 
 Route::get('unit_facilities/{id}', [UnitController::class, "unit_facilities"]);
 Route::post('unit_facilities', [UnitFacilityController::class, "store"]);
@@ -122,15 +122,11 @@ Route::delete('rentals/{id}', [RentalController::class, "archive"]);
 Route::post('terminate-rentals/{id}', [RentalController::class, "terminate"]);
 
 Route::get('reviews', [ReviewController::class, "index"]);
-Route::post('reviews', [ReviewController::class, "store"]);
-Route::post('reviews-landlord-reply', [ReviewController::class, "landlord_reply_store"]);
 
 Route::get('landlord-rentals/{id}', [RentalController::class, "landlord_rental_show"]);
 Route::get('landlord-tenants/{id}', [RentalController::class, "landlord_tenants"]);
 Route::get('landlord_units_stats/{id}', [RentalController::class, "landlord_units_stats"]);
 Route::get('landlord_upcoming_events/{id}', [RentalController::class, "landlord_upcoming_events"]);
-
-Route::get('tenant-rentals/{id}', [RentalController::class, "tenant_rental_show"]);
 
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);
@@ -160,9 +156,6 @@ Route::get('subscriptions', [SubscriptionController::class, "index"]);
 Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
 Route::put('subscriptions/{id}', [SubscriptionController::class, "update"]);
 
-Route::get('gold_units', [SubscriptionController::class, "gold_units"]);
-Route::get('silver_units', [SubscriptionController::class, "silver_units"]);
-
 
 // Route::get('user_reports', [ReportedUserController::class, "index"]);
 Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
@@ -178,7 +171,6 @@ Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
-Route::post('avatar', [ImageController::class, "showAvatar"]);
 
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
 Route::post('/google/login', [GoogleAuthController::class, 'login']);
