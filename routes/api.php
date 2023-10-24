@@ -14,6 +14,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\InclusionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserTypesController;
 use App\Http\Controllers\ReportedUserController;
 use App\Http\Controllers\SubscriptionController;
@@ -179,6 +180,9 @@ Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showCh
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
+
+Route::get('notifications', [NotificationController::class, "index"]);
+Route::get('user_notifications/{id}', [NotificationController::class, "user_notifications"]);
 
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
 Route::post('/google/login', [GoogleAuthController::class, 'login']);
