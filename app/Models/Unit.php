@@ -98,4 +98,8 @@ class Unit extends Model
         $average = $sum / $count;
         return $average;
     }
+    public function bookmark()
+    {
+        return $this->hasMany(Bookmark::class, 'unit_id');
+    }
 }
