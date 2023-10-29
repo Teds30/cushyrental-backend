@@ -11,6 +11,7 @@ use App\Models\Facility;
 use App\Models\IdentificationCardType;
 use App\Models\Image;
 use App\Models\Inclusion;
+use App\Models\Notification;
 use App\Models\Rental;
 use App\Models\ReportedUser;
 use App\Models\Review;
@@ -84,7 +85,9 @@ class DatabaseSeeder extends Seeder
 
 
         Unit::factory()->count(3)->sequence(
-            ['landlord_id' => 1, 'name' => 'Jano Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.143972, 123.727927', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+            ['landlord_id' => 1, 'name' => 'Jano Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.144563, 123.727199', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+            ['landlord_id' => 1, 'name' => 'Cutie Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.1439, 123.727762', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+            ['landlord_id' => 1, 'name' => 'Pogi Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.14427, 123.719212', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
         )->create();
 
 
@@ -100,5 +103,6 @@ class DatabaseSeeder extends Seeder
 
 
         Review::factory()->count(5)->create();
+        Notification::factory()->count(5)->create();
     }
 }
