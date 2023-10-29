@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\AccountVerificationController;
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\IdentificationCardTypeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UnitAmenityController;
@@ -83,6 +84,8 @@ Route::put('units/{id}', [UnitController::class, "update"]);
 Route::delete('units/{id}', [UnitController::class, "archive"]);
 
 Route::post('search', [UnitController::class, "unit_search"]);
+Route::post('add_bookmark', [BookmarkController::class, "create"]);
+Route::get('bookmark/{id}', [BookmarkController::class, "show"]);
 
 Route::get('attributes', [AttributeController::class, "show"]);
 

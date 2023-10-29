@@ -88,4 +88,8 @@ class User extends Authenticatable
         $total = array_sum($ratings) / count($ratings);
         return $total;
     }
+    public function bookmark()
+    {
+        return $this->hasMany(Bookmark::class, 'user_id');
+    }
 }

@@ -6,7 +6,7 @@ use App\Models\AccountVerification;
 use App\Http\Requests\StoreAccountVerificationRequest;
 use App\Http\Requests\UpdateAccountVerificationRequest;
 use Illuminate\Http\Request;
-use User;
+use App\Models\User;
 
 class AccountVerificationController extends Controller
 {
@@ -42,6 +42,8 @@ class AccountVerificationController extends Controller
      */
     public function store(Request $request)
     {
+        $out = [];
+
         $fields = $request->validate([
             'user_id' => 'required',
             'checked_by' => 'integer',
@@ -53,16 +55,10 @@ class AccountVerificationController extends Controller
             'contact_number' => 'required|string',
         ]);
 
-        $acc_ver = AccountVerification::create($fields);
-        // Teds may problem didi sa nakacomment "Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
-        // $user = auth('sanctum')->user()->id;
+        $out['acc_ver'] = AccountVerification::create($fields);
+        $out['user'] = User::where('id', $fields['user_id'])->first();
 
-        // $response = [
-        //     'user' => $user,
-        //     'res' => $acc_ver
-        // ];
-
-        return response($acc_ver, 201);
+        return response($out, 201);
     }
 
     /**
@@ -132,14 +128,10 @@ class AccountVerificationController extends Controller
 
     public function landlord_verification($id)
     {
+        
         $res = AccountVerification::get()->where('user_id', $id)->where('status', 1)->first();
 
-        if (!$res || !$res->count()) {
-            return response()->json(["message" => "No record found."], 404);
-        }
-        $res->user;
-        $res->checked_by;
-        $res->identification_card_type;
-        return $res;
+        return ['data' => $res];
+        
     }
 }
