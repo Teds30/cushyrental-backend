@@ -21,8 +21,9 @@ class BookmarkController extends Controller
 
         if ($isBookmark) {
             $isBookmark->delete();
-            $res = Bookmark::where('user_id', $fields['user_id'])->get();
-            return response()->json($res, 201);
+            return response()->json([], 201);
+            // $res = Bookmark::where('user_id', $fields['user_id'])->get();
+            // return response()->json($res, 201);
         }
 
         $res = Bookmark::create($fields);
