@@ -82,6 +82,8 @@ Route::post('units', [UnitController::class, "store"]);
 Route::put('units/{id}', [UnitController::class, "update"]);
 Route::delete('units/{id}', [UnitController::class, "archive"]);
 
+Route::post('search', [UnitController::class, "unit_search"]);
+
 Route::get('attributes', [AttributeController::class, "show"]);
 
 Route::get('unit_facilities/{id}', [UnitController::class, "unit_facilities"]);

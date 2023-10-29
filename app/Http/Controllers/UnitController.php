@@ -12,6 +12,7 @@ use App\Models\UnitFacility;
 use App\Models\UnitImage;
 use App\Models\UnitInclusion;
 use App\Models\UnitRule;
+use Illuminate\Support\Facades\DB;
 
 class UnitController extends Controller
 {
@@ -503,8 +504,96 @@ class UnitController extends Controller
 
         return $saveUnitImages;
     }
-}
 
-// 'unit_id',
-//         'image_id',
-//         'is_thumbnail',
+
+    public function unit_search(Request $request)
+    {
+
+        $filters = $request->filters;
+        $radius_km = $request->radius;
+
+        $latitude = $request->location['lat'];
+        $longitude = $request->location['lng'];
+
+
+        $units = Unit::select('*')
+            ->selectRaw(
+                '(6371 * ACOS(
+            COS(RADIANS(?)) * COS(RADIANS(SUBSTRING_INDEX(location, \',\', 1)))*
+            COS(RADIANS(? - SUBSTRING_INDEX(location, \',\', -1))) +
+            SIN(RADIANS(?)) * SIN(RADIANS(SUBSTRING_INDEX(location, \',\', 1)))
+        )) as distance',
+                [$latitude, $longitude, $latitude]
+            )
+            ->having('distance', '<=', $radius_km);
+
+        if ($request->has('filters') && isset($request->filters['price_range'])) {
+            $price_range = $request->filters['price_range'];
+            $units->whereBetween('price', $price_range);
+        }
+
+        if ($request->has('filters') && isset($request->filters['gender'])) {
+            $gender = $request->filters['gender'];
+            $units->where('target_gender', $gender);
+        }
+
+        if ($request->has('filters') && isset($request->filters['quantity'])) {
+            $quantity = $request->filters['quantity'];
+            $units->where('slots', '>=', $quantity);
+        }
+
+        if ($request->has('filters') && isset($request->filters['amenity']) && count($request->filters['amenity']) > 0) {
+            $amenities = $request->filters['amenity'];
+            $units->where(function ($query) use ($amenities) {
+                $query->whereHas('amenities', function ($query) use ($amenities) {
+                    $query->whereIn('amenity_id', $amenities);
+                });
+            });
+        }
+
+        if ($request->has('filters') && isset($request->filters['facility']) && count($request->filters['facility']) > 0) {
+            $facilities = $request->filters['facility'];
+            $units->where(function ($query) use ($facilities) {
+                $query->whereHas('facilities', function ($query) use ($facilities) {
+                    $query->whereIn('facility_id', $facilities);
+                });
+            });
+        }
+
+        if ($request->has('filters') && isset($request->filters['inclusion']) && count($request->filters['inclusion']) > 0) {
+            $inclusions = $request->filters['inclusion'];
+            $units->where(function ($query) use ($inclusions) {
+                $query->whereHas('inclusions', function ($query) use ($inclusions) {
+                    $query->whereIn('inclusion_id', $inclusions);
+                });
+            });
+        }
+
+        if ($request->has('filters') && isset($request->filters['rule']) && count($request->filters['rule']) > 0) {
+            $rules = $request->filters['rule'];
+            $units->where(function ($query) use ($rules) {
+                $query->whereHas('rules', function ($query) use ($rules) {
+                    $query->whereIn('rule_id', $rules);
+                });
+            });
+        }
+
+        $units = $units->get();
+
+
+
+        foreach ($units as $unit) {
+
+            $images = $this->unit_images($unit->id);
+            $unit["images"] = $images;
+            $unit->landlord;
+            $unit->amenities;
+            $unit->facilities;
+            $unit->inclusions;
+            $unit->rules;
+        }
+
+
+        return ['units' => $units];
+    }
+}
