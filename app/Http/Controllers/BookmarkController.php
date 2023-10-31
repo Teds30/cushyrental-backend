@@ -33,6 +33,6 @@ class BookmarkController extends Controller
     public function show($id)
     {
         $res = Bookmark::where('user_id', $id)->get();
-        return response()->json($res, 200);
+        return response()->json($res, 201);
     }
 }
