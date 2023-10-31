@@ -83,6 +83,7 @@ Route::post('units', [UnitController::class, "store"]);
 Route::put('units/{id}', [UnitController::class, "update"]);
 Route::delete('units/{id}', [UnitController::class, "archive"]);
 
+Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('add_bookmark', [BookmarkController::class, "create"]);
 Route::get('bookmark/{id}', [BookmarkController::class, "show"]);
 
