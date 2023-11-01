@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
@@ -36,6 +37,21 @@ class BookmarkController extends Controller
         foreach ($res as $unit) {
             $unit->unit;
         }
-        return response()->json($res, 200);
+        return response()->json($res, 201);
+    }
+
+    public function bookmark_units($id)
+    {
+        $out = array();
+        $bookmarks = Bookmark::where('user_id', $id)->get();
+            
+        foreach ($bookmarks as $bookmark) {
+            $unit = Unit::where('id', $bookmark->unit_id)->first();
+            if ($unit) {
+                array_push($out, $unit);
+            }
+        }
+    
+        return response()->json($out, 201);
     }
 }
