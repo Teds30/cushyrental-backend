@@ -60,6 +60,9 @@ class BookmarkController extends Controller
     public function show($id)
     {
         $res = Bookmark::where('user_id', $id)->get();
+        foreach ($res as $unit) {
+            $unit->unit;
+        }
         return response()->json($res, 201);
     }
 
