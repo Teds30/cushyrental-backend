@@ -187,6 +187,9 @@ Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"])
 
 Route::get('notifications', [NotificationController::class, "index"]);
 Route::get('user_notifications/{id}', [NotificationController::class, "user_notifications"]);
+Route::put('notifications', [NotificationController::class, "read_notification"]);
+Route::post('notifications', [NotificationController::class, "store"]);
+Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
 
 Route::post('avatar', [ImageController::class, "showAvatar"]);
 

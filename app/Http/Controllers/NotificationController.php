@@ -26,7 +26,17 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'message' => 'required|string',
+            'redirect_url' => 'required|string',
+            'user_id' => 'required|integer',
+        ]);
+
+
+        $res = Notification::create($fields);
+
+        return response($res, 200);
     }
 
     /**
@@ -63,17 +73,32 @@ class NotificationController extends Controller
         $notification->delete();
 
         // Return a response indicating the post was deleted
-        return response()->json(['message' => 'Post deleted'], 200);
+        return response()->json(['message' => 'Notification deleted'], 200);
     }
 
 
     public function user_notifications($id)
     {
-        $res = Notification::where('user_id', $id)->get();
+        $res = Notification::where('user_id', $id)->orderBy('updated_at', 'desc')->get();
 
         if (!$res || !$res->count()) {
             return response()->json([]);
         }
+        return $res;
+    }
+
+
+    public function read_notification(Request $request)
+    {
+        $res = Notification::get()->where('id', $request->id)->first();
+
+
+        if (!$res || !$res->count()) {
+            return response()->json([]);
+        }
+
+        $res->update(['is_read' => 1]);
+
         return $res;
     }
 }

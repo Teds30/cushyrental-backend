@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('message');
             $table->text('redirect_url');
             $table->unsignedBigInteger('user_id');
-            $table->tinyInteger('is_read');
+            $table->tinyInteger('is_read')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')
