@@ -292,6 +292,7 @@ class RentalController extends Controller
         $rentals = $res->rentals ?? [];
         foreach ($rentals as $rental) {
             $rental->unit;
+            $rental->unit->images;
         }
         return $rentals;
     }
