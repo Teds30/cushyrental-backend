@@ -293,6 +293,7 @@ class RentalController extends Controller
         foreach ($rentals as $rental) {
             $rental->unit;
             $rental->unit->images;
+            $rental->unit['average_ratings'] = $rental->unit->get_average_ratings();
         }
         return $rentals;
     }
