@@ -97,15 +97,15 @@ Route::delete('unit_facilities/{id}', [UnitFacilityController::class, "destroy"]
 
 Route::get('unit_amenities/{id}', [UnitController::class, "unit_amenities"]);
 Route::post('unit_amenities', [UnitAmenityController::class, "store"]);
-Route::delete('unit_amenities/{id}', [UnitAmenityController::class, "destroy"]);
+Route::delete('unit_amenities', [UnitAmenityController::class, "destroy"]);
 
 Route::get('unit_inclusions/{id}', [UnitController::class, "unit_inclusions"]);
 Route::post('unit_inclusions', [UnitInclusionController::class, "store"]);
-Route::delete('unit_inclusions/{id}', [UnitInclusionController::class, "destroy"]);
+Route::delete('unit_inclusions', [UnitInclusionController::class, "destroy"]);
 
 Route::get('unit_rules/{id}', [UnitController::class, "unit_rules"]);
 Route::post('unit_rules', [UnitRuleController::class, "store"]);
-Route::delete('unit_rules/{id}', [UnitRuleController::class, "destroy"]);
+Route::delete('unit_rules', [UnitRuleController::class, "destroy"]);
 
 Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
 Route::post('unit_images', [UnitImageController::class, "store"]);
