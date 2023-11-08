@@ -30,23 +30,38 @@ class UnitAmenityController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'unit_id' => 'required|integer',
-            'amenity_id' => 'required|string',
-        ]);
+        $res = [];
 
-        $userExist = UnitAmenity::where([
-            ['unit_id', '=', $fields['unit_id']],
-            ['amenity_id', '=', $fields['amenity_id']]
-        ])->first();
+        foreach ($request->all() as $data) {
+            $unit_amenity = UnitAmenity::where('unit_id', $data['unit_id'])->where('amenity_id', $data['id'])->first();
 
-        if ($userExist) {
-            return $userExist;
+            if (!$unit_amenity) {
+                // $unit_amenity->delete();
+                $res[] = UnitAmenity::create([
+                    'unit_id' => $data['unit_id'],
+                    'amenity_id' => $data['id']
+                ]);
+            }
         }
 
-        $res = UnitAmenity::create($fields);
+        return response()->json($res, 201);
+        // $fields = $request->validate([
+        //     'unit_id' => 'required|integer',
+        //     'amenity_id' => 'required|string',
+        // ]);
 
-        return $res;
+        // $userExist = UnitAmenity::where([
+        //     ['unit_id', '=', $fields['unit_id']],
+        //     ['amenity_id', '=', $fields['amenity_id']]
+        // ])->first();
+
+        // if ($userExist) {
+        //     return $userExist;
+        // }
+
+        // $res = UnitAmenity::create($fields);
+
+        // return $res;
     }
 
     /**
@@ -76,16 +91,19 @@ class UnitAmenityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $res = UnitAmenity::get()->where('id', $id)->first();
+        $res = [];
 
-        if (!$res || !$res->count()) {
-            return response()->json([], 404);
+        foreach ($request->all() as $data) {
+            $unit_amenity = UnitAmenity::where('unit_id', $data['unit_id'])->where('amenity_id', $data['id'])->first();
+
+            if ($unit_amenity) {
+                $unit_amenity->delete();
+                $res[] = $unit_amenity;
+            }
         }
 
-        $res->delete();
-
-        return $res;
+        return response()->json($res, 201);
     }
 }

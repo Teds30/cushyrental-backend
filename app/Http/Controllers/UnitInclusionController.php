@@ -30,23 +30,38 @@ class UnitInclusionController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'unit_id' => 'required|integer',
-            'inclusion_id' => 'required|integer',
-        ]);
+        $res = [];
 
-        $userExist = UnitInclusion::where([
-            ['unit_id', '=', $fields['unit_id']],
-            ['inclusion_id', '=', $fields['inclusion_id']]
-        ])->first();
+        foreach ($request->all() as $data) {
+            $unit_inclusion = UnitInclusion::where('unit_id', $data['unit_id'])->where('inclusion_id', $data['id'])->first();
 
-        if ($userExist) {
-            return $userExist;
+            if (!$unit_inclusion) {
+                // $unit_amenity->delete();
+                $res[] = UnitInclusion::create([
+                    'unit_id' => $data['unit_id'],
+                    'inclusion_id' => $data['id']
+                ]);
+            }
         }
 
-        $res = UnitInclusion::create($fields);
+        return response()->json($res, 201);
+        // $fields = $request->validate([
+        //     'unit_id' => 'required|integer',
+        //     'inclusion_id' => 'required|integer',
+        // ]);
 
-        return $res;
+        // $userExist = UnitInclusion::where([
+        //     ['unit_id', '=', $fields['unit_id']],
+        //     ['inclusion_id', '=', $fields['inclusion_id']]
+        // ])->first();
+
+        // if ($userExist) {
+        //     return $userExist;
+        // }
+
+        // $res = UnitInclusion::create($fields);
+
+        // return $res;
     }
 
     /**
@@ -76,16 +91,19 @@ class UnitInclusionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $res = UnitInclusion::get()->where('id', $id)->first();
+        $res = [];
 
-        if (!$res || !$res->count()) {
-            return response()->json([], 404);
+        foreach ($request->all() as $data) {
+            $unit_inclusion = UnitInclusion::where('unit_id', $data['unit_id'])->where('inclusion_id', $data['id'])->first();
+
+            if ($unit_inclusion) {
+                $unit_inclusion->delete();
+                $res[] = $unit_inclusion;
+            }
         }
 
-        $res->delete();
-
-        return $res;
+        return response()->json($res, 201);
     }
 }
