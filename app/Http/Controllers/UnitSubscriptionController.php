@@ -34,6 +34,14 @@ class UnitSubscriptionController extends Controller
      */
     public function store(Request $request)
     {
+        $subscription = UnitSubscription::where('unit_id', $request['id'])->where('date_start', $request['date_start'])->where('date_end', $request['date_end'])->first();
+
+        if ($subscription) {
+            $subscription->update(['type' => $request['type'], 'request_status' => $request['request_status']]);
+            return response()->json($subscription, 201);
+        }
+
+
         $fields = $request->validate([
             'unit_id' => 'required|integer',
             'subscription_id' => 'required|integer',

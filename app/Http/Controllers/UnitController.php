@@ -156,7 +156,7 @@ class UnitController extends Controller
             return response()->json([], 404);
         }
 
-        $res->update($request->all());
+        $res->update(['is_listed' => $request['is_listed'], 'verdict' => $request['verdict'], 'request_status' => $request['request_status']]);
 
         return $res;
     }
