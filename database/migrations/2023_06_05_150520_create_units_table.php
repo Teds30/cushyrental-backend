@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('slots');
             $table->tinyInteger('is_listed')->default(0);
             $table->tinyInteger('request_status')->default(0);
-            $table->tinyInteger('verdict')->nullable();
+            $table->text('verdict')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
