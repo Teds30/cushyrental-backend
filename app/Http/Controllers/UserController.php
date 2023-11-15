@@ -115,4 +115,15 @@ class UserController extends Controller
         }
         return $out;
     }
+
+    public function get_email($email)
+    {
+        $res = User::where('email', $email)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 200);
+        }
+
+        return $res;
+    }
 }
