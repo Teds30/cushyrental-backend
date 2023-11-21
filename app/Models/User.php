@@ -28,6 +28,7 @@ class User extends Authenticatable
         'profile_picture_img',
         'user_type_id',
         'is_verified',
+        'is_social',
         'status',
     ];
 
