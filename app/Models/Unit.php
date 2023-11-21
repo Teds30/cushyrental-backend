@@ -23,6 +23,7 @@ class Unit extends Model
         'subscription_id',
         'is_listed',
         'request_status',
+        'verdict',
         'status',
     ];
 

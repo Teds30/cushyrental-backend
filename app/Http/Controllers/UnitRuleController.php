@@ -30,23 +30,39 @@ class UnitRuleController extends Controller
      */
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'unit_id' => 'required|integer',
-            'rule_id' => 'required|integer',
-        ]);
 
-        $userExist = UnitRule::where([
-            ['unit_id', '=', $fields['unit_id']],
-            ['rule_id', '=', $fields['rule_id']]
-        ])->first();
+        $res = [];
 
-        if ($userExist) {
-            return $userExist;
+        foreach ($request->all() as $data) {
+            $unit_rule = UnitRule::where('unit_id', $data['unit_id'])->where('rule_id', $data['id'])->first();
+
+            if (!$unit_rule) {
+                // $unit_amenity->delete();
+                $res[] = UnitRule::create([
+                    'unit_id' => $data['unit_id'],
+                    'rule_id' => $data['id']
+                ]);
+            }
         }
 
-        $res = UnitRule::create($fields);
+        return response()->json($res, 201);
+        // $fields = $request->validate([
+        //     'unit_id' => 'required|integer',
+        //     'rule_id' => 'required|integer',
+        // ]);
 
-        return $res;
+        // $userExist = UnitRule::where([
+        //     ['unit_id', '=', $fields['unit_id']],
+        //     ['rule_id', '=', $fields['rule_id']]
+        // ])->first();
+
+        // if ($userExist) {
+        //     return $userExist;
+        // }
+
+        // $res = UnitRule::create($fields);
+
+        // return $res;
     }
 
     /**
@@ -76,16 +92,19 @@ class UnitRuleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $res = UnitRule::get()->where('id', $id)->first();
+        $res = [];
 
-        if (!$res || !$res->count()) {
-            return response()->json([], 404);
+        foreach ($request->all() as $data) {
+            $unit_rule = UnitRule::where('unit_id', $data['unit_id'])->where('rule_id', $data['id'])->first();
+
+            if ($unit_rule) {
+                $unit_rule->delete();
+                $res[] = $unit_rule;
+            }
         }
 
-        $res->delete();
-
-        return $res;
+        return response()->json($res, 201);
     }
 }

@@ -11,6 +11,7 @@ class BookmarkController extends Controller
 {
     public function create(Request $request)
     {
+        $is_listed = true;
         $bookmarksWithUnits = [];
 
         $fields = $request->validate([
@@ -24,10 +25,10 @@ class BookmarkController extends Controller
 
         if ($isBookmark) {
             $isBookmark->delete();
-            
+
             $bookmarks = Bookmark::where('user_id', $fields['user_id'])->get();
             foreach ($bookmarks as $bookmark) {
-                $unit = Unit::where('id', $bookmark->unit_id)->first();
+                $unit = Unit::find($bookmark->unit_id)->where('is_listed', $is_listed)->where('status', 0);
                 if ($unit) {
                     $unit->load('landlord');
                     $amenities = $this->unit_amenities($unit->id);
@@ -37,7 +38,7 @@ class BookmarkController extends Controller
                     $images = $this->unit_images($unit->id);
                     $subscriptions = $this->unit_active_subscriptions($unit->id);
                     $ratings = $unit->get_average_ratings();
-    
+
                     // Add average ratings to the unit details
                     $unit['amenities'] = $amenities;
                     $unit['facilities'] = $facilities;
@@ -46,7 +47,8 @@ class BookmarkController extends Controller
                     $unit['images'] = $images;
                     $unit['active_subscription'] = $subscriptions;
                     $unit['average_ratings'] = $ratings;
-    
+                    $unit['bookmark'] = $bookmark;
+
                     $bookmarksWithUnits[] = $unit;
                 }
             }
@@ -68,11 +70,15 @@ class BookmarkController extends Controller
 
     public function bookmark_units($id)
     {
+        $is_listed = 1;
         $bookmarks = Bookmark::where('user_id', $id)->get();
         $bookmarksWithUnits = [];
 
         foreach ($bookmarks as $bookmark) {
-            $unit = Unit::find($bookmark->unit_id);
+            $unit = Unit::where('id', $bookmark->unit_id)
+            ->where('is_listed', $is_listed)
+            ->where('status', 1)
+            ->first();
 
             if ($unit) {
                 $unit->load('landlord');
@@ -92,6 +98,7 @@ class BookmarkController extends Controller
                 $unit['images'] = $images;
                 $unit['active_subscription'] = $subscriptions;
                 $unit['average_ratings'] = $ratings;
+                $unit['bookmark'] = $bookmark;
 
                 $bookmarksWithUnits[] = $unit;
             }

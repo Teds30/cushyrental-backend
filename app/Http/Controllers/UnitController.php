@@ -161,6 +161,23 @@ class UnitController extends Controller
         return $res;
     }
 
+    public function verify(Request $request)
+    {
+
+        $res = Unit::find($request["id"]);
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        
+        $res->update([
+            'is_listed' => $request["is_listed"],
+            'verdict' => $request['verdict'],
+            'request_status' => $request["request_status"]
+        ]);
+        return $res;
+    }
+
     /**
      * Remove the specified resource from storage.
      */

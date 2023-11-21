@@ -62,6 +62,7 @@ Route::get('users', [UserController::class, "index"]);
 Route::get('users/{id}', [UserController::class, "show"]);
 Route::get('user_units/{id}', [UserController::class, "user_units"]);
 Route::put('users/update/{id}', [UserController::class, "update"]);
+Route::get('users/email/{email}', [UserController::class, "get_email"]);
 
 Route::get('user_types', [UserTypesController::class, "index"])->middleware('admin');
 Route::get('user_types/{id}', [UserTypesController::class, "show"])->middleware('admin');
@@ -82,6 +83,7 @@ Route::get('units/{id}', [UnitController::class, "show"]);
 Route::post('units', [UnitController::class, "store"]);
 Route::put('units/{id}', [UnitController::class, "update"]);
 Route::delete('units/{id}', [UnitController::class, "archive"]);
+Route::post('verify_unit', [UnitController::class, "verify"]);
 
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('add_bookmark', [BookmarkController::class, "create"]);
@@ -97,15 +99,15 @@ Route::delete('unit_facilities/{id}', [UnitFacilityController::class, "destroy"]
 
 Route::get('unit_amenities/{id}', [UnitController::class, "unit_amenities"]);
 Route::post('unit_amenities', [UnitAmenityController::class, "store"]);
-Route::delete('unit_amenities/{id}', [UnitAmenityController::class, "destroy"]);
+Route::delete('unit_amenities', [UnitAmenityController::class, "destroy"]);
 
 Route::get('unit_inclusions/{id}', [UnitController::class, "unit_inclusions"]);
 Route::post('unit_inclusions', [UnitInclusionController::class, "store"]);
-Route::delete('unit_inclusions/{id}', [UnitInclusionController::class, "destroy"]);
+Route::delete('unit_inclusions', [UnitInclusionController::class, "destroy"]);
 
 Route::get('unit_rules/{id}', [UnitController::class, "unit_rules"]);
 Route::post('unit_rules', [UnitRuleController::class, "store"]);
-Route::delete('unit_rules/{id}', [UnitRuleController::class, "destroy"]);
+Route::delete('unit_rules', [UnitRuleController::class, "destroy"]);
 
 Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
 Route::post('unit_images', [UnitImageController::class, "store"]);
