@@ -176,6 +176,8 @@ Route::get('silver_units', [SubscriptionController::class, "silver_units"]);
 Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
 Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_group_show"]);
 
+Route::post('user_reports', [ReportedUserController::class, "store"]);
+
 
 Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
 Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
