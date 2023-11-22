@@ -53,6 +53,7 @@ class GoogleAuthController extends Controller
             'user_type_id' => $fields['user_type_id'],
             'email' => $fields['email'],
             'profile_picture_img' => $fields['profile_picture_img'],
+            'is_social' => 1,
         ]);
 
         // Generate a token for the user

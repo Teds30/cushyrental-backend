@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'profile_picture_img' => 'default/1.png',
             'user_type_id' => UserTypes::pluck('id')->random(),
             'is_verified' => 1,
+            'is_social' => 0,
             'status' => 1,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

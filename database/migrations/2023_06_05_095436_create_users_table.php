@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreignId('user_type_id')
                 ->constrained();
             $table->tinyInteger('is_verified')->default(0);
+            $table->tinyInteger('is_social')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();

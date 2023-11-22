@@ -64,6 +64,9 @@ Route::get('user_units/{id}', [UserController::class, "user_units"]);
 Route::put('users/update/{id}', [UserController::class, "update"]);
 Route::get('users/email/{email}', [UserController::class, "get_email"]);
 
+Route::post('request_otp', [UserController::class, "request_otp"]);
+Route::post('validate_otp', [UserController::class, "validate_otp"]);
+
 Route::get('user_types', [UserTypesController::class, "index"])->middleware('admin');
 Route::get('user_types/{id}', [UserTypesController::class, "show"])->middleware('admin');
 
@@ -177,6 +180,8 @@ Route::get('silver_units', [SubscriptionController::class, "silver_units"]);
 // Route::get('user_reports', [ReportedUserController::class, "index"]);
 Route::get('user_reports', [ReportedUserController::class, "reported_user_group"]);
 Route::get('user_reports/{id}', [ReportedUserController::class, "reported_user_group_show"]);
+
+Route::post('user_reports', [ReportedUserController::class, "store"]);
 
 
 Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
