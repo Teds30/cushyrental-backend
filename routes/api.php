@@ -64,6 +64,9 @@ Route::get('user_units/{id}', [UserController::class, "user_units"]);
 Route::put('users/update/{id}', [UserController::class, "update"]);
 Route::get('users/email/{email}', [UserController::class, "get_email"]);
 
+Route::post('request_otp', [UserController::class, "request_otp"]);
+Route::post('validate_otp', [UserController::class, "validate_otp"]);
+
 Route::get('user_types', [UserTypesController::class, "index"])->middleware('admin');
 Route::get('user_types/{id}', [UserTypesController::class, "show"])->middleware('admin');
 

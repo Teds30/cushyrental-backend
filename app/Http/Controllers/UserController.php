@@ -6,6 +6,8 @@ use App\Models\Amenity;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use Twilio\Rest\Client;
+
 class UserController extends Controller
 {
     /**
@@ -56,22 +58,14 @@ class UserController extends Controller
             return response()->json([], 404);
         }
 
-        $fields = $request->validate([
-            'first_name' => 'required|string',
-            'middle_name' => 'required|string',
-            'last_name' => 'required|string',
-            'phone_number' => 'required|string',
-            'gender' => 'required|string',
-            'profile_picture_img' => 'required|string'
-        ]);
-
         $res->update([
-            'first_name' => $fields['first_name'],
-            'middle_name' => $fields['middle_name'],
-            'last_name' => $fields['last_name'],
-            'phone_number' => $fields['phone_number'],
-            'gender' => $fields['gender'],
-            'profile_picture_img' => $fields['profile_picture_img']
+            'first_name' => $request['first_name'],
+            'middle_name' => $request['middle_name'],
+            'last_name' => $request['last_name'],
+            'phone_number' => $request['phone_number'],
+            'gender' => $request['gender'],
+            'profile_picture_img' => $request['profile_picture_img'],
+            'phone_number' => $request['phone_number'],
         ]);
 
         return $res;
@@ -125,5 +119,69 @@ class UserController extends Controller
         }
 
         return $res;
+    }
+
+    public function request_otp(Request $request)
+    {
+        $fields = $request->validate([
+            'number' => 'required|string',
+        ]);
+
+        $number = $fields['number'];
+
+        $isLengthValid = strlen($number) === 11;
+        $startsWith09 = substr($number, 0, 2) === '09';
+        $isAllDigits = ctype_digit($number);
+
+        // Combine the conditions
+        if ($isLengthValid && $startsWith09 && $isAllDigits) {
+            $transformedNumber = '+63' . substr($number, 1);
+            $sid = getenv("TWILIO_SID");
+            $otp_sid = getenv("TWILIO_OTP_SID");
+            $token = getenv("TWILIO_TOKEN");
+            $twilio = new Client($sid, $token);
+
+            $verification = $twilio->verify->v2->services($otp_sid)
+                ->verifications
+                ->create($transformedNumber, "sms");
+
+            return (["status" => $verification->status]);
+        }
+    }
+
+    public function validate_otp(Request $request)
+    {
+
+        $fields = $request->validate([
+            'number' => 'required|string',
+            'otp' => 'required|string',
+        ]);
+
+        $number = $fields['number'];
+        $otp = $fields['otp'];
+
+        $isLengthValid = strlen($number) === 11;
+        $startsWith09 = substr($number, 0, 2) === '09';
+        $isAllDigits = ctype_digit($number);
+
+        // Combine the conditions
+        if ($isLengthValid && $startsWith09 && $isAllDigits) {
+            $transformedNumber = '+63' . substr($number, 1);
+            $sid = getenv("TWILIO_SID");
+            $otp_sid = getenv("TWILIO_OTP_SID");
+            $token = getenv("TWILIO_TOKEN");
+            $twilio = new Client($sid, $token);
+            $verification_check = $twilio->verify->v2->services($otp_sid)
+                ->verificationChecks
+                ->create(
+                    [
+                        "to" => $transformedNumber,
+                        "code" => $otp
+                    ]
+                );
+
+            return (["status" => $verification_check->status]);
+        }
+        return false;
     }
 }
