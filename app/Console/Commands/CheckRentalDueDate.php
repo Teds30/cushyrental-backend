@@ -37,6 +37,7 @@ class CheckRentalDueDate extends Command
             $unit_name = $rental->unit->name;
             $tenant = $rental->user;
             $landlord = $rental->unit->landlord;
+            $amount = $rental->monthly_amount;
 
             $due_date = $threeDaysBeforeRentalMonth->format('F j');
             $fields = [
@@ -59,9 +60,10 @@ class CheckRentalDueDate extends Command
             $landlord_res = Notification::create($landlord_fields);
 
             $landlord_number = $rental->user->phone_number;
+            $landlord_name = $landlord->first_name . " " . $landlord->last_name;
             // print($landlord_number);
 
-            if ($landlord_number) {
+            if ($tenant->phone_number) {
 
                 // $sid    = env('TWILIO_SID');
                 // $token  = env('TWILIO_TOKEN');
@@ -69,14 +71,16 @@ class CheckRentalDueDate extends Command
 
                 // $message = $twilio->messages
                 //     ->create(
-                //         $landlord_number, // to
+                //         $tenant->phone_number, // to
                 //         array(
-                //             "from" => "+12293745515",
-                //             "body" => "This is a reminder of your rental payment for the unit '$unit_name'."
+                //             "from" => "+19045496873",
+                //             // "body" => "This is a reminder of your rental payment for the unit '$unit_name'."
+                //             "body" => "Prepare your payment before the due.\nLandlord Name: $landlord_name\nAmount: ₱$amount"
                 //         )
                 //     );
 
-                // print($message->sid);
+                // print($message);
+                print("to: $tenant->phone_number; Prepare your payment before the due. \nLandlord Name: $landlord_name \nAmount: ₱$amount");
             }
         }
     }
