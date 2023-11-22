@@ -26,33 +26,33 @@ class BookmarkController extends Controller
         if ($isBookmark) {
             $isBookmark->delete();
 
-            $bookmarks = Bookmark::where('user_id', $fields['user_id'])->get();
-            foreach ($bookmarks as $bookmark) {
-                $unit = Unit::find($bookmark->unit_id)->where('is_listed', $is_listed)->where('status', 0);
-                if ($unit) {
-                    $unit->load('landlord');
-                    $amenities = $this->unit_amenities($unit->id);
-                    $facilities = $this->unit_facilities($unit->id);
-                    $inclusions = $this->unit_inclusions($unit->id);
-                    $rules = $this->unit_rules($unit->id);
-                    $images = $this->unit_images($unit->id);
-                    $subscriptions = $this->unit_active_subscriptions($unit->id);
-                    $ratings = $unit->get_average_ratings();
+            // $bookmarks = Bookmark::where('user_id', $fields['user_id'])->get();
+            // foreach ($bookmarks as $bookmark) {
+            //     $unit = Unit::find($bookmark->unit_id)->where('is_listed', $is_listed)->where('status', 0);
+            //     if ($unit) {
+            //         $unit->load('landlord');
+            //         $amenities = $this->unit_amenities($unit->id);
+            //         $facilities = $this->unit_facilities($unit->id);
+            //         $inclusions = $this->unit_inclusions($unit->id);
+            //         $rules = $this->unit_rules($unit->id);
+            //         $images = $this->unit_images($unit->id);
+            //         $subscriptions = $this->unit_active_subscriptions($unit->id);
+            //         $ratings = $unit->get_average_ratings();
 
-                    // Add average ratings to the unit details
-                    $unit['amenities'] = $amenities;
-                    $unit['facilities'] = $facilities;
-                    $unit['inclusions'] = $inclusions;
-                    $unit['rules'] = $rules;
-                    $unit['images'] = $images;
-                    $unit['active_subscription'] = $subscriptions;
-                    $unit['average_ratings'] = $ratings;
-                    $unit['bookmark'] = $bookmark;
+            //         // Add average ratings to the unit details
+            //         $unit['amenities'] = $amenities;
+            //         $unit['facilities'] = $facilities;
+            //         $unit['inclusions'] = $inclusions;
+            //         $unit['rules'] = $rules;
+            //         $unit['images'] = $images;
+            //         $unit['active_subscription'] = $subscriptions;
+            //         $unit['average_ratings'] = $ratings;
+            //         $unit['bookmark'] = $bookmark;
 
-                    $bookmarksWithUnits[] = $unit;
-                }
-            }
-            return response()->json($bookmarksWithUnits, 201);
+            //         $bookmarksWithUnits[] = $unit;
+            //     }
+            // }
+            return response()->json([], 200);
         }
 
         $res = Bookmark::create($fields);
