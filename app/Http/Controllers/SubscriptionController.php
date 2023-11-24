@@ -59,7 +59,7 @@ class SubscriptionController extends Controller
         $res = UnitSubscription::where('subscription_id', 3)->where('type', 1)->where('request_status', 1)->get();
 
         if (!$res || !$res->count()) {
-            return response()->json([], 404);
+            return response()->json([]);
         }
 
         foreach ($res as $subscription) {
@@ -73,7 +73,7 @@ class SubscriptionController extends Controller
         $res = UnitSubscription::where('subscription_id', 2)->where('type', 1)->where('request_status', 1)->get();
 
         if (!$res || !$res->count()) {
-            return response()->json([], 404);
+            return response()->json([]);
         }
 
         foreach ($res as $subscription) {
