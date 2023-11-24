@@ -38,12 +38,13 @@ class SchoolController extends Controller
         $fields = $request->validate([
             'location' => 'required|string',
             'name' => 'required|string',
+            'icon' => 'required|string',
         ]);
 
-        $unit = School::create($fields);
+        $school = School::create($fields);
 
 
-        return $unit;
+        return $school;
     }
 
     /**
