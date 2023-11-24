@@ -6,6 +6,8 @@ use App\Models\ReportedUser;
 use App\Http\Requests\StoreReportedUserRequest;
 use App\Http\Requests\UpdateReportedUserRequest;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReportedUserController extends Controller
@@ -41,9 +43,36 @@ class ReportedUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReportedUserRequest $request)
+    public function store(Request $request)
     {
-        //
+
+        $fields = $request->validate([
+            'user_id' => 'required|integer',
+            'reported_by' => 'required|integer',
+            'reason' => 'required|string',
+        ]);
+        // Get today's date
+        $today = Carbon::now();
+
+        $existed = ReportedUser::where('user_id', $fields['user_id'])->where('reported_by', $fields['reported_by'])->orderBy('updated_at', 'desc')->get()->first();
+
+
+        if ($existed) {
+            // Calculate the time difference between $existed and $today
+            $timeDifference = $today->diffInHours($existed->updated_at);
+
+            if ($timeDifference >= 24) {
+
+                $reported = ReportedUser::create($fields);
+                return $reported;
+            }
+        } else {
+
+            $reported = ReportedUser::create($fields);
+            return $reported;
+        }
+
+        return response()->json([]);
     }
 
     /**
@@ -51,7 +80,7 @@ class ReportedUserController extends Controller
      */
     public function show($id)
     {
-        $res = ReportedUser::get()->where('id', $id)->where('status', 1)->firstOrFail();
+        $res = ReportedUser::get()->where('id', $id)->where('status', 1)->first();
 
         if (!$res || !$res->count()) {
             return response()->json([], 404);
