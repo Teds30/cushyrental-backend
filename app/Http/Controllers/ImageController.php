@@ -45,7 +45,7 @@ class ImageController extends Controller
             // ]);
 
             // Check if the file is an image based on its mime type
-            if (!in_array($file->getClientMimeType(), ['image/jpeg', 'image/bmp', 'image/png'])) {
+            if (!in_array($file->getClientMimeType(), ['image/jpeg', 'image/bmp', 'image/png', 'image/svg+xml'])) {
                 return  response()->json(['error' => 'The uploaded file is not a valid image.']);
             }
 
@@ -112,6 +112,16 @@ class ImageController extends Controller
         }
     }
 
+    public function showSchoolIcon($fileName)
+    {
+        $pathToFile = storage_path("app/uploads/school_icons/" . $fileName);
+        try {
+            return response()->file($pathToFile);
+        } catch (ExceptionFileNotFoundException $exception) {
+            return response()->json("File not found.", 404);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -135,6 +145,14 @@ class ImageController extends Controller
     {
         // $res = Storage::delete($fileName);
         $res = unlink(storage_path('app/uploads/attribute_icons/' . $fileName));
+
+        return response()->json($res);
+    }
+
+    public function destroySchoolIcon($fileName)
+    {
+        // $res = Storage::delete($fileName);
+        $res = unlink(storage_path('app/uploads/school_icons/' . $fileName));
 
         return response()->json($res);
     }
