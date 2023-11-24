@@ -16,6 +16,7 @@ use App\Models\Rental;
 use App\Models\ReportedUser;
 use App\Models\Review;
 use App\Models\Rule;
+use App\Models\School;
 use App\Models\Subscription;
 use App\Models\Unit;
 use App\Models\UnitAmenity;
@@ -104,5 +105,13 @@ class DatabaseSeeder extends Seeder
 
         Review::factory()->count(5)->create();
         Notification::factory()->count(5)->create();
+        School::factory()->count(5)->sequence(
+            ['name' => 'Bicol University Main Campus', 'location' => '13.144297,123.725128', 'icon' => 'BU_Main.png'],
+            ['name' => 'Bicol University - East Campus', 'location' => '13.147322,123.729648', 'icon' => 'BU_Main.png'],
+            ['name' => 'University of Santo Tomas Legazpi', 'location' => '13.1645849,123.7510655', 'icon' => 'ustl.png'],
+            ['name' => 'Divine Word College Legazpi', 'location' => '13.138219,123.735674', 'icon' => 'DWCL.png'],
+            ['name' => 'Computer Arts and Technological College', 'location' => '13.1641,123.751605', 'icon' => 'catc.png'],
+            ['name' => 'Tanchuling College', 'location' => '13.143853,123.752583', 'icon' => 'tanchuling.png'],
+        )->create();
     }
 }

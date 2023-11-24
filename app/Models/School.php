@@ -12,11 +12,11 @@ class School extends Model
     protected $fillable = [
         'name',
         'location',
-        'image_id',
+        'icon',
         'status',
     ];
 
-    
+
     public function image()
     {
         return $this->belongsTo(Image::class, 'image_id');

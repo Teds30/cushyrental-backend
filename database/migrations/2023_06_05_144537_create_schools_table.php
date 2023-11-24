@@ -15,14 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('location');
-            $table->unsignedBigInteger('image_id');
+            $table->text('icon');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-
-
-            $table->foreign('image_id')
-                ->references('id')
-                ->on('images');
         });
     }
 

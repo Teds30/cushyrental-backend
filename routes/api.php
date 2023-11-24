@@ -25,6 +25,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\IdentificationCardTypeController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UnitAmenityController;
 use App\Http\Controllers\UnitFacilityController;
 use App\Http\Controllers\UnitImageController;
@@ -164,6 +165,13 @@ Route::post('inclusions', [InclusionController::class, "store"]);
 Route::put('inclusions/{id}', [InclusionController::class, "update"]);
 Route::delete('inclusions/{id}', [InclusionController::class, "destroy"]);
 
+
+Route::get('schools', [SchoolController::class, "index"]);
+Route::get('schools/{id}', [SchoolController::class, "show"]);
+Route::post('schools', [SchoolController::class, "store"]);
+Route::put('schools/{id}', [SchoolController::class, "update"]);
+Route::delete('schools/{id}', [SchoolController::class, "destroy"]);
+
 Route::get('rules', [RuleController::class, "index"]);
 Route::get('rules/{id}', [RuleController::class, "show"]);
 Route::post('rules', [RuleController::class, "store"]);
@@ -193,6 +201,9 @@ Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
+
+Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
+Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
 
 Route::get('notifications', [NotificationController::class, "index"]);
 Route::get('user_notifications/{id}', [NotificationController::class, "user_notifications"]);
