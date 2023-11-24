@@ -51,11 +51,10 @@ class RentalController extends Controller
         $rental = Rental::create($fields);
 
         if ($rental) {
-            $unit = Unit::find($request->unit_id)->first();
+            $unit = Unit::get()->where('id', $request->unit_id)->first();
             if ($unit) {
                 $req_slots = $request->slots;
                 $unit_slots = $unit->slots;
-
                 $new_slots = $unit_slots - $req_slots;
                 $unit->update(["slots" => $new_slots]);
             }
