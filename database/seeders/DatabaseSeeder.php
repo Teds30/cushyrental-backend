@@ -60,24 +60,39 @@ class DatabaseSeeder extends Seeder
         AccountVerification::factory()->create();
 
 
-        Facility::factory()->count(3)->sequence(
+        Facility::factory()->count(6)->sequence(
             ['name' => 'Comfort Room', 'icon' => 'facility_1692025831.svg', 'is_switch' => 0],
-            ['name' => 'Kitchen Sink', 'icon' => 'facility_1692026078.svg', 'is_switch' =>  0],
+            ['name' => 'Kitchen Sink', 'icon' => 'facility_1700850916.svg', 'is_switch' =>  0],
             ['name' => 'Parking', 'icon' => 'facility_1692026270.svg', 'is_switch' => 1],
+            ['name' => 'Dining Area', 'icon' => 'facility_1700851016.svg', 'is_switch' => 1],
+            ['name' => 'Shower Room', 'icon' => 'facility_1700851083.svg', 'is_switch' => 1],
+            ['name' => 'Bed', 'icon' => 'facility_1700851129.svg', 'is_switch' => 1],
         )->create();
 
-        Amenity::factory()->count(2)->sequence(
-            ['name' => 'CCTV', 'icon' => 'amenity_1692025416.svg'],
-            ['name' => 'Air Condition', 'icon' => 'amenity_1692025428.svg'],
+        Amenity::factory()->count(9)->sequence(
+            ['name' => 'CCTV', 'icon' => 'amenity_1700844363.svg'],
+            ['name' => 'Air Condition', 'icon' => 'amenity_1700844377.svg'],
+            ['name' => 'Washer', 'icon' => 'amenity_1700843433.svg'],
+            ['name' => 'Refrigerator', 'icon' => 'amenity_1700844421.svg'],
+            ['name' => 'Television', 'icon' => 'amenity_1700844435.svg'],
+            ['name' => 'Stove', 'icon' => 'amenity_1700844481.svg'],
+            ['name' => 'Wi-Fi', 'icon' => 'amenity_1700844531.svg'],
+            ['name' => 'Electric Fan', 'icon' => 'amenity_1700853180.svg'],
+            ['name' => 'Water Heater', 'icon' => 'amenity_1700858301.svg'],
         )->create();
-        Inclusion::factory()->count(2)->sequence(
+
+        Inclusion::factory()->count(3)->sequence(
             ['name' => 'Water', 'icon' => 'inclusion_1692026406.svg'],
             ['name' => 'Electricity', 'icon' => 'inclusion_1692026414.svg'],
+            ['name' => 'Wi-Fi', 'icon' => 'inclusion_1700851501.svg'],
         )->create();
+
         Rule::factory()->count(2)->sequence(
             ['name' => 'No Visitors', 'icon' => 'rule_1692027093.svg'],
-            ['name' => 'No Smoking', 'icon' => 'rule_1692026581.svg'],
+            ['name' => 'No Smoking', 'icon' => 'rule_1700851306.svg'],
+            ['name' => 'No Pets', 'icon' => 'rule_1700851326.svg'],
         )->create();
+
         Subscription::factory()->count(3)->sequence(
             ['name' => 'Bronze', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
             ['name' => 'Silver', 'price' => 0, 'details' => 'An example details of a subscription.', 'hex_color' => '#ffffff', 'features' => 'a feature; another feature', 'duration' => 500],
