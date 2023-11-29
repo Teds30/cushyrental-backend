@@ -156,4 +156,14 @@ class ImageController extends Controller
 
         return response()->json($res);
     }
+
+    public function showSubscriptionPayment($fileName)
+    {
+        $pathToFile = storage_path("app/uploads/proof_of_payment/" . $fileName);
+        try {
+            return response()->file($pathToFile);
+        } catch (ExceptionFileNotFoundException $exception) {
+            return response()->json("File not found.", 404);
+        }
+    }
 }

@@ -19,6 +19,7 @@ class UnitSubscription extends Model
         'date_start',
         'date_end',
         'type',
+        'verdict',
         'request_status',
     ];
 

@@ -122,6 +122,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
     Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
     Route::delete('unit_subscriptions/{id}', [UnitSubscriptionController::class, "destroy"]);
+    Route::put('unit_subscriptions', [UnitSubscriptionController::class, "update"]);
 
     Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
     Route::get('unit_reviews/{id}', [UnitController::class, "unit_reviews"]);
@@ -203,6 +204,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
     Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
     Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
+    Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
     Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
     Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('account_name');
             $table->string('account_number');
             $table->string('email_address');
+            $table->text('verdict')->nullable();
             $table->timestamp('date_start')->nullable();
             $table->timestamp('date_end')->nullable();
             $table->tinyInteger('type')->default(0)->comment('0 -> active | 1 -> expired | 2 -> terminated');

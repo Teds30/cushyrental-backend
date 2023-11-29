@@ -79,9 +79,24 @@ class UnitSubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUnitSubscriptionRequest $request, UnitSubscription $unitSubscription)
+    public function update(Request $request)
     {
-        //
+        $res = UnitSubscription::get()->where('id', $request['id'])->first();
+
+        IF ($request['request_status'] === 2) {
+            $res->update([
+                'request_status' => $request['request_status'],
+            ]);
+        } else {
+            $res->update([
+                'verdict' => $request['verdict'],
+                'date_start' => $request['date_start'],
+                'date_end' => $request['date_end'],
+                'request_status' => $request['request_status'],
+            ]);
+        }
+
+        return $res;
     }
 
     /**
