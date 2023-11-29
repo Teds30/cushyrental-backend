@@ -53,6 +53,10 @@ Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
 Route::post('forgot_password', [AuthController::class, "updatePassword"]);
 
+Route::post('/google/auth', [GoogleAuthController::class, 'register']);
+Route::post('/google/login', [GoogleAuthController::class, 'login']);
+Route::post('/facebook/auth', [FacebookAuthController::class, 'register']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [AuthController::class, "logout"]);
 });
@@ -91,7 +95,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('verify_unit', [UnitController::class, "verify"]);
     Route::get('similar_units/{id}', [UnitController::class, "similar_units"]);
 
-    Route::post('search', [UnitController::class, "unit_search"]);
     Route::post('add_bookmark', [BookmarkController::class, "create"]);
     Route::get('bookmark/{id}', [BookmarkController::class, "show"]);
     Route::get('bookmark_units/{id}', [BookmarkController::class, "bookmark_units"]);
@@ -181,7 +184,6 @@ Route::middleware('auth:api')->group(function () {
     Route::put('rules/{id}', [RuleController::class, "update"]);
     Route::delete('rules/{id}', [RuleController::class, "destroy"]);
 
-    Route::get('subscriptions', [SubscriptionController::class, "index"]);
     Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
     Route::put('subscriptions/{id}', [SubscriptionController::class, "update"]);
 
@@ -199,14 +201,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
 
     Route::post('image-upload', [ImageController::class, "store"]);
-    Route::get('images', [ImageController::class, "index"]);
+    // Route::get('images', [ImageController::class, "index"]);
     Route::get('images/{fileName}', [ImageController::class, "showImage"]);
     Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
-    Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
     Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
     Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
-    Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
     Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
 
     // Route::get('notifications', [NotificationController::class, "index"]);
@@ -215,9 +215,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('notifications', [NotificationController::class, "store"]);
     Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
 
-    Route::post('avatar', [ImageController::class, "showAvatar"]);
-
-    Route::post('/google/auth', [GoogleAuthController::class, 'register']);
-    Route::post('/google/login', [GoogleAuthController::class, 'login']);
-    Route::post('/facebook/auth', [FacebookAuthController::class, 'register']);
 });
+
+Route::post('search', [UnitController::class, "unit_search"]);
+Route::post('avatar', [ImageController::class, "showAvatar"]);
+Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
+Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
