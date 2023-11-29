@@ -25,6 +25,7 @@ class AccountVerificationController extends Controller
             $e->user;
             $e->checked_by;
             $e->identification_card_type;
+           
         }
         return $res;
     }
@@ -74,6 +75,7 @@ class AccountVerificationController extends Controller
         $res->user;
         $res->checked_by;
         $res->identification_card_type;
+
         return $res;
     }
 
@@ -129,7 +131,10 @@ class AccountVerificationController extends Controller
     public function landlord_verification($id)
     {
         
-        $res = AccountVerification::get()->where('user_id', $id)->where('status', 1)->first();
+        $res = AccountVerification::with('identification_card_type')
+        ->where('user_id', $id)
+        ->where('status', 1)
+        ->first();
 
         return ['data' => $res];
         
