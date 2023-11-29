@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Amenity;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use Twilio\Rest\Client;
 
@@ -73,9 +74,13 @@ class UserController extends Controller
 
     public function user_data(Request $request)
     {
-        $res = $request->user();
+        $user = $request->user();
 
-        return $res;
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return response()->json(['user' => $user], 200);
     }
 
     /**
