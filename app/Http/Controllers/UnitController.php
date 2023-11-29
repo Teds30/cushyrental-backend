@@ -50,6 +50,80 @@ class UnitController extends Controller
         return $res;
     }
 
+    public function similar_units($id)
+    {
+
+        $toCompare = Unit::where('id', $id)->where('status', 1)->first();
+
+        $amenityIds = collect($toCompare->amenities)->pluck('amenity_id')->toArray() ?? [];
+        $facilityIds = collect($toCompare->facilities)->pluck('facility_id')->toArray() ?? [];
+        $inclusionIds = collect($toCompare->inclusions)->pluck('inclusion_id')->toArray() ?? [];
+
+        $similarUnits = Unit::select('units.*')
+            ->leftJoin('unit_amenities', 'units.id', '=', 'unit_amenities.unit_id')
+            ->leftJoin('unit_facilities', 'units.id', '=', 'unit_facilities.unit_id')
+            ->leftJoin('unit_inclusions', 'units.id', '=', 'unit_inclusions.unit_id')
+            ->where(function ($query) use ($amenityIds, $facilityIds, $inclusionIds) {
+                if (!empty($amenityIds)) {
+                    $query->whereIn('unit_amenities.amenity_id', $amenityIds);
+                }
+
+                if (!empty($facilityIds)) {
+                    $query->orWhereIn('unit_facilities.facility_id', $facilityIds);
+                }
+
+                if (!empty($inclusionIds)) {
+                    $query->orWhereIn('unit_inclusions.inclusion_id', $inclusionIds);
+                }
+            })
+            ->where('units.id', '!=', $id) // Exclude the unit being compared
+            ->groupBy(
+                'units.id',
+                'units.landlord_id',
+                'units.name',
+                'units.details',
+                'units.price',
+                'units.month_advance',
+                'units.month_deposit',
+                'units.location',
+                'units.address',
+                'units.target_gender',
+                'units.slots',
+                'units.is_listed',
+                'units.request_status',
+                'units.verdict',
+                'units.status',
+                'units.created_at',
+                'units.updated_at',
+            )
+            ->orderByRaw('COUNT(*) DESC')
+            ->take(3)
+            ->distinct()
+            ->get();
+
+        foreach ($similarUnits as $entry) {
+            $entry->landlord;
+
+            $amenities = $this->unit_amenities($entry->id);
+            $facilities = $this->unit_facilities($entry->id);
+            $inclusions = $this->unit_inclusions($entry->id);
+            $rules = $this->unit_rules($entry->id);
+            $images = $this->unit_images($entry->id);
+            $subscriptions = $this->unit_active_subscriptions($entry->id);
+            $ratings = $entry->get_average_ratings();
+
+            $entry['amenities'] = $amenities;
+            $entry['facilities'] = $facilities;
+            $entry['inclusions'] = $inclusions;
+            $entry['rules'] = $rules;
+            $entry['images'] = $images;
+            $entry['active_subscription'] = $subscriptions;
+            $entry['average_ratings'] = $ratings;
+        }
+
+        return $similarUnits;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -169,7 +243,7 @@ class UnitController extends Controller
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
-        
+
         $res->update([
             'is_listed' => $request["is_listed"],
             'verdict' => $request['verdict'],
