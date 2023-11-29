@@ -33,9 +33,21 @@ class GoogleAuthController extends Controller
         $userExist = User::where('email', $request['email'])->first();
 
         if ($userExist) {
-            return response([
-                'message' => 'Email already exist.'
-            ], 401);
+
+            // Generate a token for the user
+            $token = $userExist->createToken('myapptoken')->plainTextToken;
+
+            // Prepare a success response
+            $response = [
+                'user' => $userExist,
+                'token' => $token
+            ];
+
+            return response($response, 201);
+
+            // return response([
+            //     'message' => 'Email already exist.'
+            // ], 401);
         }
 
         $fields = $request->validate([
