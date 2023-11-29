@@ -119,6 +119,7 @@ Route::delete('unit_images/', [UnitImageController::class, "destroy"]);
 
 Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
 Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
+Route::put('unit_subscriptions', [UnitSubscriptionController::class, "update"]);
 Route::delete('unit_subscriptions/{id}', [UnitSubscriptionController::class, "destroy"]);
 
 Route::get('unit_rentals/{id}', [UnitController::class, "unit_rentals"]);
@@ -200,6 +201,7 @@ Route::get('images', [ImageController::class, "index"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
+Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
 
 Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
