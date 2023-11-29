@@ -379,6 +379,11 @@ class UnitController extends Controller
                         'date_end' => $u_subscription['date_end'],
                         'type' => $u_subscription['type'],
                         'request_status' => $u_subscription['request_status'],
+                        'pop_image_id' => $u_subscription['pop_image_id'],
+                        'account_name' => $u_subscription['account_name'],
+                        'account_number' => $u_subscription['account_number'],
+                        'email_address' => $u_subscription['email_address'],
+                        'subscription_id' => $u_subscription['id'],
                     ];
                 }
             }
