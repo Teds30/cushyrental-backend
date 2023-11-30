@@ -78,6 +78,7 @@ Route::get('account_verifications', [AccountVerificationController::class, "inde
 Route::get('account_verifications/{id}', [AccountVerificationController::class, "show"]);
 Route::post('account_verifications', [AccountVerificationController::class, "store"]);
 Route::put('account_verifications/{id}', [AccountVerificationController::class, "update"]);
+Route::put('admin_verification_landlord', [AccountVerificationController::class, "update_landlord_verification"]);
 Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
 
 
@@ -214,6 +215,7 @@ Route::post('notifications', [NotificationController::class, "store"]);
 Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
 
 Route::post('avatar', [ImageController::class, "showAvatar"]);
+Route::get('landlord_verification_id/{fileName}', [ImageController::class, "showLandlordId"]);
 
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
 Route::post('/google/login', [GoogleAuthController::class, 'login']);
