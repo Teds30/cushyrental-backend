@@ -166,4 +166,14 @@ class ImageController extends Controller
             return response()->json("File not found.", 404);
         }
     }
+
+    public function showLandlordId($fileName)
+    {
+        $pathToFile = storage_path("app/uploads/identification_card/" . $fileName);
+        try {
+            return response()->file($pathToFile);
+        } catch (ExceptionFileNotFoundException $exception) {
+            return response()->json("File not found.", 404);
+        }
+    }
 }
