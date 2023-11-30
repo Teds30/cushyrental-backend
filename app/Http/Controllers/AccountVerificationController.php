@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Models\AccountVerification;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreAccountVerificationRequest;
 use App\Http\Requests\UpdateAccountVerificationRequest;
-use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class AccountVerificationController extends Controller
 {
@@ -25,7 +27,6 @@ class AccountVerificationController extends Controller
             $e->user;
             $e->checked_by;
             $e->identification_card_type;
-           
         }
         return $res;
     }
@@ -56,11 +57,28 @@ class AccountVerificationController extends Controller
             'contact_number' => 'required|string',
         ]);
 
-        $out['acc_ver'] = AccountVerification::create($fields);
-        $out['user'] = User::where('id', $fields['user_id'])->first();
+        $isVerified = AccountVerification::where('user_id', $fields['user_id'])->first();
+
+        if ($isVerified) {
+            $isVerified->update([
+                'submitted_id_image_url' => $fields['submitted_id_image_url'],
+                'identification_card_type_id' => $fields['identification_card_type_id'],
+                'address' => $fields['address'],
+                'contact_number' => $fields['contact_number'],
+                'verdict' => null,
+                'denied_reason' => null,
+            ]);
+
+            $out['acc_ver'] = $isVerified;
+            $out['user'] = User::where('id', $fields['user_id'])->first();
+        } else {
+            $out['acc_ver'] = AccountVerification::create($fields);
+            $out['user'] = User::where('id', $fields['user_id'])->first();
+        }
 
         return response($out, 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -130,13 +148,50 @@ class AccountVerificationController extends Controller
 
     public function landlord_verification($id)
     {
-        
+
         $res = AccountVerification::with('identification_card_type')
-        ->where('user_id', $id)
-        ->where('status', 1)
-        ->first();
+            ->where('user_id', $id)
+            ->where('status', 1)
+            ->first();
 
         return ['data' => $res];
-        
+    }
+
+    public function update_landlord_verification(Request $request)
+    {
+        $res = AccountVerification::get()->where('id', $request['id'])->first();
+
+        if ($request['verdict'] === 0) {
+            $this->delete_dentification_card($res->submitted_id_image_url);
+
+            $res->update([
+                'checked_by_id' => $request['checked_by_id'],
+                'verdict' => $request['verdict'],
+                'denied_reason' => $request['denied_reason'],
+            ]);
+        } else {
+            $pathToFile = public_path("uploads/identification_card/" . $res->submitted_id_image_url);
+            
+            $res->update([
+                'checked_by_id' => $request['checked_by_id'],
+                'verdict' => $request['verdict'],
+            ]);
+
+            $res->User->update(['is_verified' => $request['verdict']]);
+            // if (file_exists($pathToFile)) {
+            //     File::delete($image_path);
+            //     unlink($pathToFile);
+            // }
+        }
+
+        return $res;
+    }
+
+    public function delete_dentification_card($fileName)
+    {
+        // $res = Storage::delete($fileName);
+        $res = unlink(storage_path('app/uploads/identification_card/' . $fileName));
+
+        // return response()->json($res);
     }
 }
