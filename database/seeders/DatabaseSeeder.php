@@ -50,14 +50,14 @@ class DatabaseSeeder extends Seeder
 
         )->create();
 
-        User::factory()->count(10)->create();
-        BlacklistedUser::factory()->create();
-        ReportedUser::factory()->count(10)->create();
+        // User::factory()->count(10)->create();
+        // BlacklistedUser::factory()->create();
+        // ReportedUser::factory()->count(10)->create();
         IdentificationCardType::factory()->count(2)->sequence(
             ['name' => 'National ID'],
             ['name' => "Driver's License"],
         )->create();
-        AccountVerification::factory()->create();
+        // AccountVerification::factory()->create();
 
 
         Facility::factory()->count(6)->sequence(
@@ -100,26 +100,26 @@ class DatabaseSeeder extends Seeder
         )->create();
 
 
-        Unit::factory()->count(3)->sequence(
-            ['landlord_id' => 1, 'name' => 'Jano Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.144563, 123.727199', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
-            ['landlord_id' => 1, 'name' => 'Cutie Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.1439, 123.727762', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
-            ['landlord_id' => 1, 'name' => 'Pogi Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.14427, 123.719212', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
-        )->create();
+        // Unit::factory()->count(3)->sequence(
+        //     ['landlord_id' => 1, 'name' => 'Jano Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.144563, 123.727199', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+        //     ['landlord_id' => 1, 'name' => 'Cutie Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.1439, 123.727762', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+        //     ['landlord_id' => 1, 'name' => 'Pogi Boarding House', 'details' => fake()->paragraph(), 'price' => 3500, 'month_advance' => 1, 'month_deposit' => 1, 'location' => '13.14427, 123.719212', 'address' => 'EMs Barrio', 'target_gender' => 3, 'slots' => 4],
+        // )->create();
 
 
-        Image::factory()->create();
-        UnitFacility::factory()->create();
-        UnitAmenity::factory()->create();
-        UnitAmenity::factory()->create();
-        UnitInclusion::factory()->create();
-        UnitRule::factory()->create();
-        UnitImage::factory()->create();
-        UnitSubscription::factory()->create();
-        Rental::factory()->create();
+        // Image::factory()->create();
+        // UnitFacility::factory()->create();
+        // UnitAmenity::factory()->create();
+        // UnitAmenity::factory()->create();
+        // UnitInclusion::factory()->create();
+        // UnitRule::factory()->create();
+        // UnitImage::factory()->create();
+        // UnitSubscription::factory()->create();
+        // Rental::factory()->create();
 
 
-        Review::factory()->count(5)->create();
-        Notification::factory()->count(5)->create();
+        // Review::factory()->count(5)->create();
+        // Notification::factory()->count(5)->create();
         School::factory()->count(7)->sequence(
             ['name' => 'Bicol University Main Campus', 'location' => '13.144297,123.725128', 'icon' => 'BU_Main.png'],
             ['name' => 'Bicol University - East Campus', 'location' => '13.147322,123.729648', 'icon' => 'BU_Main.png'],
