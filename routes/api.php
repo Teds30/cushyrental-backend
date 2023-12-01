@@ -202,12 +202,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
 
     // Route::get('images', [ImageController::class, "index"]);
-    Route::get('images/{fileName}', [ImageController::class, "showImage"]);
-    Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
-    Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
-    Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
-
-    Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
 
     // Route::get('notifications', [NotificationController::class, "index"]);
     Route::get('user_notifications/{id}', [NotificationController::class, "user_notifications"]);
@@ -217,6 +211,14 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('image-upload', [ImageController::class, "store"]);
+
+Route::get('images/{fileName}', [ImageController::class, "showImage"]);
+Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
+Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
+Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
+
+Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
+
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
 Route::get('landlord_verification_id/{fileName}', [ImageController::class, "showLandlordId"]);
