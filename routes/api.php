@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::middleware('auth:api')->group(function () {
 
     Route::get('user_data', [UserController::class, 'user_data']);
-    // Route::get('users', [UserController::class, "index"]);
+    Route::get('users', [UserController::class, "index"]);
     Route::get('users/{id}', [UserController::class, "show"]);
     Route::get('user_units/{id}', [UserController::class, "user_units"]);
     Route::put('users/update/{id}', [UserController::class, "update"]);
@@ -75,7 +75,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('user_types', [UserTypesController::class, "index"])->middleware('admin');
     Route::get('user_types/{id}', [UserTypesController::class, "show"])->middleware('admin');
-
 
     Route::get('identification_cards', [IdentificationCardTypeController::class, "index"]);
 
@@ -185,7 +184,6 @@ Route::middleware('auth:api')->group(function () {
     Route::put('rules/{id}', [RuleController::class, "update"]);
     Route::delete('rules/{id}', [RuleController::class, "destroy"]);
 
-    Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
     Route::put('subscriptions/{id}', [SubscriptionController::class, "update"]);
 
     Route::get('gold_units', [SubscriptionController::class, "gold_units"]);
@@ -218,6 +216,9 @@ Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"])
 Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
 Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
+
+Route::get('subscriptions', [SubscriptionController::class, "index"]);
+Route::get('subscriptions/{id}', [SubscriptionController::class, "show"]);
 
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
