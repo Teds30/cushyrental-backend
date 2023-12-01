@@ -83,7 +83,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('account_verifications/{id}', [AccountVerificationController::class, "show"]);
     Route::post('account_verifications', [AccountVerificationController::class, "store"]);
     Route::put('account_verifications/{id}', [AccountVerificationController::class, "update"]);
-    Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
+    Route::put('admin_verification_landlord', [AccountVerificationController::class, "update_landlord_verification"]);
+Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
 
 
     Route::get('units_stats', [UnitController::class, "unit_stats"]);
@@ -219,5 +220,6 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
+Route::get('landlord_verification_id/{fileName}', [ImageController::class, "showLandlordId"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
