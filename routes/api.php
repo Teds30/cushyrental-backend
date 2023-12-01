@@ -56,6 +56,7 @@ Route::post('forgot_password', [AuthController::class, "updatePassword"]);
 Route::post('/google/auth', [GoogleAuthController::class, 'register']);
 Route::post('/google/login', [GoogleAuthController::class, 'login']);
 Route::post('/facebook/auth', [FacebookAuthController::class, 'register']);
+Route::get('users/email/{email}', [UserController::class, "get_email"]);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [AuthController::class, "logout"]);
@@ -68,7 +69,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users/{id}', [UserController::class, "show"]);
     Route::get('user_units/{id}', [UserController::class, "user_units"]);
     Route::put('users/update/{id}', [UserController::class, "update"]);
-    Route::get('users/email/{email}', [UserController::class, "get_email"]);
 
     Route::post('request_otp', [UserController::class, "request_otp"]);
     Route::post('validate_otp', [UserController::class, "validate_otp"]);
@@ -84,7 +84,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('account_verifications', [AccountVerificationController::class, "store"]);
     Route::put('account_verifications/{id}', [AccountVerificationController::class, "update"]);
     Route::put('admin_verification_landlord', [AccountVerificationController::class, "update_landlord_verification"]);
-Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
+    Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
 
 
     Route::get('units_stats', [UnitController::class, "unit_stats"]);
@@ -215,7 +215,6 @@ Route::delete('account_verifications/{id}', [AccountVerificationController::clas
     Route::put('notifications', [NotificationController::class, "read_notification"]);
     Route::post('notifications', [NotificationController::class, "store"]);
     Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
-
 });
 
 Route::post('search', [UnitController::class, "unit_search"]);
