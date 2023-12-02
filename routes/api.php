@@ -134,8 +134,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('rentals', [RentalController::class, "index"]);
     Route::get('user_subscriptions/{landlord_id}', [UnitSubscriptionController::class, "user_subscriptions"]);
 
-
-    //TODO: Verify sender
+    Route::post('rentals', [RentalController::class, "store"]);
     Route::get('rentals/{id}', [RentalController::class, "show"]);
     Route::put('rentals/{id}', [RentalController::class, "update"]);
     Route::delete('rentals/{id}', [RentalController::class, "archive"]);
@@ -207,7 +206,6 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
 });
 
-Route::post('rentals', [RentalController::class, "store"]);
 Route::post('image-upload', [ImageController::class, "store"]);
 
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
