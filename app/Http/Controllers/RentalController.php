@@ -275,7 +275,7 @@ class RentalController extends Controller
             return response()->json([], 404);
         }
 
-        $res->update(["rental_status" => 4]);
+        $res->update(["date_end" => Carbon::now(), "rental_status" => 4]);
 
         return $res;
     }
