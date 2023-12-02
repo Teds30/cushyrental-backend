@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\BlacklistedUser;
 use App\Http\Requests\StoreBlacklistedUserRequest;
 use App\Http\Requests\UpdateBlacklistedUserRequest;
+use App\Models\User;
 
 class BlacklistedUserController extends Controller
 {
@@ -19,10 +21,31 @@ class BlacklistedUserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create(Request $request)
+{   
+    $fields = $request->validate([
+        'user_id' => 'required|integer',
+        'reason' => 'required|string',
+        'restricted_until' => 'required|string',
+        'status' => 'required|integer', // Assuming you have a 'status' field in your request
+    ]);
+
+    if ($fields['status'] === 0) {
+        $res = BlacklistedUser::create([
+            'user_id' => $fields['user_id'],
+            'reason' => $fields['reason'],
+            'restricted_until' => $fields['restricted_until'],
+        ]);
+
+        // Update the status for the user
+        User::where('id', $fields['user_id'])->update(['status' => $fields['status']]);
+    } else {
+        $res = BlacklistedUser::create($fields);
     }
+
+    return $res;
+}
+
 
     /**
      * Store a newly created resource in storage.
