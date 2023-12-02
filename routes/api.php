@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [AuthController::class, "logout"]);
 });
 
-Route::middleware('auth:api')->group(function () {
+// Route::middleware('auth:api')->group(function () {
 
     Route::get('user_data', [UserController::class, 'user_data']);
     Route::get('users', [UserController::class, "index"]);
@@ -219,7 +219,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('notifications', [NotificationController::class, "read_notification"]);
     Route::post('notifications', [NotificationController::class, "store"]);
     Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
-});
+// });
 
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
