@@ -133,6 +133,8 @@ Route::get('landlord_upcoming_events/{id}', [RentalController::class, "landlord_
 
 Route::get('tenant-rentals/{id}', [RentalController::class, "tenant_rental_show"]);
 
+Route::get('attributes', [AttributeController::class, "show"]);
+
 Route::get('amenities', [AmenityController::class, "index"]);
 Route::get('amenities/{id}', [AmenityController::class, "show"]);
 Route::post('amenities', [AmenityController::class, "store"]);
