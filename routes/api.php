@@ -100,27 +100,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('bookmark_units/{id}', [BookmarkController::class, "bookmark_units"]);
     // 
 
-    Route::get('attributes', [AttributeController::class, "show"]);
-
-    Route::get('unit_facilities/{id}', [UnitController::class, "unit_facilities"]);
-    Route::post('unit_facilities', [UnitFacilityController::class, "store"]);
-    Route::delete('unit_facilities/{id}', [UnitFacilityController::class, "destroy"]);
-
-    Route::get('unit_amenities/{id}', [UnitController::class, "unit_amenities"]);
-    Route::post('unit_amenities', [UnitAmenityController::class, "store"]);
-    Route::delete('unit_amenities', [UnitAmenityController::class, "destroy"]);
-
-    Route::get('unit_inclusions/{id}', [UnitController::class, "unit_inclusions"]);
-    Route::post('unit_inclusions', [UnitInclusionController::class, "store"]);
-    Route::delete('unit_inclusions', [UnitInclusionController::class, "destroy"]);
-
-    Route::get('unit_rules/{id}', [UnitController::class, "unit_rules"]);
-    Route::post('unit_rules', [UnitRuleController::class, "store"]);
-    Route::delete('unit_rules', [UnitRuleController::class, "destroy"]);
-
-    Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
-    Route::post('unit_images', [UnitImageController::class, "store"]);
-    Route::delete('unit_images/', [UnitImageController::class, "destroy"]);
 
     Route::get('unit_subscriptions/{id}', [UnitController::class, "unit_subscriptions"]);
     Route::post('unit_subscriptions', [UnitSubscriptionController::class, "store"]);
@@ -151,36 +130,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('tenant-rentals/{id}', [RentalController::class, "tenant_rental_show"]);
 
-    Route::get('amenities', [AmenityController::class, "index"]);
-    Route::get('amenities/{id}', [AmenityController::class, "show"]);
-    Route::post('amenities', [AmenityController::class, "store"]);
-    Route::put('amenities/{id}', [AmenityController::class, "update"]);
-    Route::delete('amenities/{id}', [AmenityController::class, "destroy"]);
-
-    Route::get('facilities', [FacilityController::class, "index"]);
-    Route::get('facilities/{id}', [FacilityController::class, "show"]);
-    Route::post('facilities', [FacilityController::class, "store"]);
-    Route::put('facilities/{id}', [FacilityController::class, "update"]);
-    Route::delete('facilities/{id}', [FacilityController::class, "destroy"]);
-
-    Route::get('inclusions', [InclusionController::class, "index"]);
-    Route::get('inclusions/{id}', [InclusionController::class, "show"]);
-    Route::post('inclusions', [InclusionController::class, "store"]);
-    Route::put('inclusions/{id}', [InclusionController::class, "update"]);
-    Route::delete('inclusions/{id}', [InclusionController::class, "destroy"]);
-
-
-    Route::get('schools', [SchoolController::class, "index"]);
-    Route::get('schools/{id}', [SchoolController::class, "show"]);
-    Route::post('schools', [SchoolController::class, "store"]);
-    Route::put('schools/{id}', [SchoolController::class, "update"]);
-    Route::delete('schools/{id}', [SchoolController::class, "destroy"]);
-
-    Route::get('rules', [RuleController::class, "index"]);
-    Route::get('rules/{id}', [RuleController::class, "show"]);
-    Route::post('rules', [RuleController::class, "store"]);
-    Route::put('rules/{id}', [RuleController::class, "update"]);
-    Route::delete('rules/{id}', [RuleController::class, "destroy"]);
 
     Route::put('subscriptions/{id}', [SubscriptionController::class, "update"]);
 
@@ -223,3 +172,57 @@ Route::post('avatar', [ImageController::class, "showAvatar"]);
 Route::get('landlord_verification_id/{fileName}', [ImageController::class, "showLandlordId"]);
 Route::get('attribute_icons/{fileName}', [ImageController::class, "showIcon"]);
 Route::get('school_icons/{fileName}', [ImageController::class, "showSchoolIcon"]);
+
+Route::get('attributes', [AttributeController::class, "show"]);
+
+Route::get('unit_facilities/{id}', [UnitController::class, "unit_facilities"]);
+Route::post('unit_facilities', [UnitFacilityController::class, "store"]);
+Route::delete('unit_facilities/{id}', [UnitFacilityController::class, "destroy"]);
+
+Route::get('unit_amenities/{id}', [UnitController::class, "unit_amenities"]);
+Route::post('unit_amenities', [UnitAmenityController::class, "store"]);
+Route::delete('unit_amenities', [UnitAmenityController::class, "destroy"]);
+
+Route::get('unit_inclusions/{id}', [UnitController::class, "unit_inclusions"]);
+Route::post('unit_inclusions', [UnitInclusionController::class, "store"]);
+Route::delete('unit_inclusions', [UnitInclusionController::class, "destroy"]);
+
+Route::get('unit_rules/{id}', [UnitController::class, "unit_rules"]);
+Route::post('unit_rules', [UnitRuleController::class, "store"]);
+Route::delete('unit_rules', [UnitRuleController::class, "destroy"]);
+
+Route::get('unit_images/{id}', [UnitController::class, "unit_images"]);
+Route::post('unit_images', [UnitImageController::class, "store"]);
+Route::delete('unit_images/', [UnitImageController::class, "destroy"]);
+
+
+Route::get('amenities', [AmenityController::class, "index"]);
+Route::get('amenities/{id}', [AmenityController::class, "show"]);
+Route::post('amenities', [AmenityController::class, "store"]);
+Route::put('amenities/{id}', [AmenityController::class, "update"]);
+Route::delete('amenities/{id}', [AmenityController::class, "destroy"]);
+
+Route::get('facilities', [FacilityController::class, "index"]);
+Route::get('facilities/{id}', [FacilityController::class, "show"]);
+Route::post('facilities', [FacilityController::class, "store"]);
+Route::put('facilities/{id}', [FacilityController::class, "update"]);
+Route::delete('facilities/{id}', [FacilityController::class, "destroy"]);
+
+Route::get('inclusions', [InclusionController::class, "index"]);
+Route::get('inclusions/{id}', [InclusionController::class, "show"]);
+Route::post('inclusions', [InclusionController::class, "store"]);
+Route::put('inclusions/{id}', [InclusionController::class, "update"]);
+Route::delete('inclusions/{id}', [InclusionController::class, "destroy"]);
+
+
+Route::get('schools', [SchoolController::class, "index"]);
+Route::get('schools/{id}', [SchoolController::class, "show"]);
+Route::post('schools', [SchoolController::class, "store"]);
+Route::put('schools/{id}', [SchoolController::class, "update"]);
+Route::delete('schools/{id}', [SchoolController::class, "destroy"]);
+
+Route::get('rules', [RuleController::class, "index"]);
+Route::get('rules/{id}', [RuleController::class, "show"]);
+Route::post('rules', [RuleController::class, "store"]);
+Route::put('rules/{id}', [RuleController::class, "update"]);
+Route::delete('rules/{id}', [RuleController::class, "destroy"]);
