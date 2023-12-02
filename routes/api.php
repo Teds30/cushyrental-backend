@@ -65,7 +65,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Route::middleware('auth:api')->group(function () {
 
 
-Route::get('user_data', [UserController::class, 'user_data']);
+Route::middleware('auth:api')->group(function () {
+    Route::get('user_data', [UserController::class, 'user_data']);
+});
 Route::get('users', [UserController::class, "index"])->middleware('admin');
 Route::get('users/{id}', [UserController::class, "show"]);
 Route::get('user_units/{id}', [UserController::class, "user_units"]);
