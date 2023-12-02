@@ -66,7 +66,7 @@ class RentalController extends Controller
         //     'rental' => $rental
         // ];
 
-        return $rental;
+        return response($rental, 200);
     }
 
     /**
