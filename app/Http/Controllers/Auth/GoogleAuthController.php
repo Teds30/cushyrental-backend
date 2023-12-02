@@ -25,6 +25,16 @@ class GoogleAuthController extends Controller
             ];
 
             return response($response, 201);
+        } else {
+
+
+            $response = [
+                'user' => null,
+                'token' => null,
+                'error' => 'The email provided is not yet registered.'
+            ];
+
+            return response($response);
         }
     }
     public function register(Request $request)
@@ -52,7 +62,7 @@ class GoogleAuthController extends Controller
 
         $fields = $request->validate([
             'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'last_name' => 'string|nullable',
             'user_type_id' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'profile_picture_img' => 'required|string',
@@ -61,7 +71,7 @@ class GoogleAuthController extends Controller
         // Create a new user
         $user = User::create([
             'first_name' => $fields['first_name'],
-            'last_name' => $fields['last_name'],
+            'last_name' => $fields['last_name'] ?? '',
             'user_type_id' => $fields['user_type_id'],
             'email' => $fields['email'],
             'profile_picture_img' => $fields['profile_picture_img'],
