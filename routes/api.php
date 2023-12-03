@@ -88,7 +88,6 @@ Route::middleware('auth:api')->group(function () {
     Route::put('admin_verification_landlord', [AccountVerificationController::class, "update_landlord_verification"]);
     Route::delete('account_verifications/{id}', [AccountVerificationController::class, "archive"]);
 
-
     Route::get('units_stats', [UnitController::class, "unit_stats"]);
     Route::get('units', [UnitController::class, "index"]);
     Route::get('units/{id}', [UnitController::class, "show"]);
@@ -101,7 +100,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('add_bookmark', [BookmarkController::class, "create"]);
     Route::get('bookmark/{id}', [BookmarkController::class, "show"]);
     Route::get('bookmark_units/{id}', [BookmarkController::class, "bookmark_units"]);
-    // 
 
     Route::get('attributes', [AttributeController::class, "show"]);
 
@@ -136,7 +134,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('rentals', [RentalController::class, "index"]);
     Route::get('user_subscriptions/{landlord_id}', [UnitSubscriptionController::class, "user_subscriptions"]);
-
 
     //TODO: Verify sender
     Route::get('rentals/{id}', [RentalController::class, "show"]);
@@ -173,7 +170,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('inclusions', [InclusionController::class, "store"]);
     Route::put('inclusions/{id}', [InclusionController::class, "update"]);
     Route::delete('inclusions/{id}', [InclusionController::class, "destroy"]);
-
 
     Route::get('schools', [SchoolController::class, "index"]);
     Route::get('schools/{id}', [SchoolController::class, "show"]);
