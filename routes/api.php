@@ -208,6 +208,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
     Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
+    
+    Route::put('update_unit_location', [UnitController::class, "update_location"]);
 
     Route::get('notifications', [NotificationController::class, "index"]);
     Route::get('user_notifications/{id}', [NotificationController::class, "user_notifications"]);

@@ -692,4 +692,16 @@ class UnitController extends Controller
 
         return ['units' => $units];
     }
+
+    public function update_location(Request $request)
+    {   
+        $res = Unit::find($request->id);
+        $res->update([
+            'location' => $request->location,
+            'address' => $request->address
+        ]);
+
+        return $res;
+    }
+
 }
