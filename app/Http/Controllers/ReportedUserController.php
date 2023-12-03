@@ -138,7 +138,7 @@ class ReportedUserController extends Controller
     {
         // $out = array();
 
-        $res = User::get()->where('id', $user_id)->where('status', 1)->firstOrFail();
+        $res = User::get()->where('id', $user_id)->where('status', 1)->first();
         if (!$res || !$res->count()) {
             return response()->json([], 404);
         }
