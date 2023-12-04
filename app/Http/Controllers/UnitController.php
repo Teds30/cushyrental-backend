@@ -623,6 +623,9 @@ class UnitController extends Controller
             )
             ->having('distance', '<=', $radius_km);
 
+        $units->where('status', 1);
+        $units->where('is_listed', 1);
+
         if ($request->has('filters') && isset($request->filters['price_range'])) {
             $price_range = $request->filters['price_range'];
             $units->whereBetween('price', $price_range);
@@ -694,7 +697,7 @@ class UnitController extends Controller
     }
 
     public function update_location(Request $request)
-    {   
+    {
         $res = Unit::find($request->id);
         $res->update([
             'location' => $request->location,
@@ -703,5 +706,4 @@ class UnitController extends Controller
 
         return $res;
     }
-
 }
