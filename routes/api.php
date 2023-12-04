@@ -220,7 +220,7 @@ Route::middleware('auth:api')->group(function () {
 Route::get('similar_units/{id}', [UnitController::class, "similar_units"]);
 Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
-Route::get('images/{id}', [ImageController::class, "show"]);
+Route::get('imagesById/{id}', [ImageController::class, "show"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
 
 Route::post('search', [UnitController::class, "unit_search"]);
