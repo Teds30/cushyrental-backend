@@ -71,6 +71,18 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      */
+
+    public function show($id)
+    {
+        $res = Image::get()->where('id', $id)->where('status', 1)->first();
+
+        if (!$res || !$res->count()) {
+            return response()->json([], 404);
+        }
+        return $res;
+    }
+
+
     public function showImage($fileName)
     {
         $pathToFile = storage_path("app/uploads/images/" . $fileName);
