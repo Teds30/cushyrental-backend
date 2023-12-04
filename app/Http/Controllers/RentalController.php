@@ -44,6 +44,7 @@ class RentalController extends Controller
             'unit_id' => 'required|integer',
             'slots' => 'required|integer',
             'monthly_amount' => 'required|numeric',
+            'rental_status' => 'required|numeric',
             'due_date' => 'required|integer',
             'date_start' => 'required|string',
         ]);
