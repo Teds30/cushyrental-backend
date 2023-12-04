@@ -96,7 +96,6 @@ Route::middleware('auth:api')->group(function () {
     Route::put('units/{id}', [UnitController::class, "update"]);
     Route::delete('units/{id}', [UnitController::class, "archive"]);
     Route::post('verify_unit', [UnitController::class, "verify"]);
-    Route::get('similar_units/{id}', [UnitController::class, "similar_units"]);
 
     Route::post('add_bookmark', [BookmarkController::class, "create"]);
     Route::get('bookmark/{id}', [BookmarkController::class, "show"]);
@@ -208,7 +207,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
     Route::delete('school_icons/{fileName}', [ImageController::class, "destroySchoolIcon"]);
-    
+
     Route::put('update_unit_location', [UnitController::class, "update_location"]);
 
     Route::get('notifications', [NotificationController::class, "index"]);
@@ -218,6 +217,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('notifications/{id}', [NotificationController::class, "destroy"]);
 });
 
+Route::get('similar_units/{id}', [UnitController::class, "similar_units"]);
 Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
