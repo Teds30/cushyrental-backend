@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('environment_star')->default(0);
             $table->integer('unit_star')->default(0);
             $table->integer('landlord_star')->default(0);
-            $table->integer('star')->default(0);
+            $table->float('star')->default(0);
             $table->text('message')->nullable();
             $table->text('landlord_reply')->nullable();
             $table->tinyInteger('status')->default(1);
