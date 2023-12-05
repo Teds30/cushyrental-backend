@@ -202,7 +202,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('landlord_verifications', [AccountVerificationController::class, "index"]);
     Route::get('landlord_verifications/{id}', [AccountVerificationController::class, "landlord_verification"]);
 
-    Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
     Route::delete('attribute_icons/{fileName}', [ImageController::class, "destroy"]);
     Route::get('subscription_payment/{fileName}', [ImageController::class, "showSubscriptionPayment"]);
 
@@ -222,6 +221,7 @@ Route::post('image-upload', [ImageController::class, "store"]);
 Route::get('images', [ImageController::class, "index"]);
 Route::get('imagesById/{id}', [ImageController::class, "show"]);
 Route::get('images/{fileName}', [ImageController::class, "showImage"]);
+Route::get('chats-images/{room_id}/{fileName}', [ImageController::class, "showChatImage"]);
 
 Route::post('search', [UnitController::class, "unit_search"]);
 Route::post('avatar', [ImageController::class, "showAvatar"]);
