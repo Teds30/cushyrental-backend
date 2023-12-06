@@ -82,7 +82,7 @@ class CheckRentalDueDate extends Command
                 //     );
 
                 // print($message);
-                print("to: $tenant->phone_number; Prepare your payment before the due. \nLandlord Name: $landlord_name \nAmount: ₱$amount");
+                print("\n===================\nTO: $tenant->phone_number; Prepare your payment before the due. \nLandlord Name: $landlord_name \nAmount: ₱$amount\n");
             }
         }
     }
