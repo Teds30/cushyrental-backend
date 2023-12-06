@@ -21,9 +21,10 @@ class CheckRentalDueDate extends Command
      */
     public function handle()
     {
-        print('now running');
         // Get today's date
         $today = Carbon::now();
+
+        print("[$today]checking rental due dates.");
 
         // Calculate the date 3 days before the rental month
         $threeDaysBeforeRentalMonth = $today->copy()->addDays(3);
