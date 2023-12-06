@@ -65,6 +65,8 @@ class SubscriptionController extends Controller
         foreach ($res as $subscription) {
             $subscription->unit;
             $subscription->unit->images[0]->image;
+            $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
+            $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
         }
         return $res;
     }
