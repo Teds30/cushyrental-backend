@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -37,6 +38,17 @@ return new class extends Migration
                 ->references('id')
                 ->on('images');
         });
+
+        DB::unprepared('
+        CREATE TRIGGER update_type_to_expired
+        BEFORE UPDATE ON unit_subscriptions
+        FOR EACH ROW
+        BEGIN
+            IF NEW.date_end <= NOW() THEN
+                SET NEW.type = 2;
+            END IF;
+        END
+        ');
     }
 
     /**
