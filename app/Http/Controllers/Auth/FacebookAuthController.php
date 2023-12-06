@@ -22,7 +22,6 @@ class FacebookAuthController extends Controller
 
         $fields = $request->validate([
             'first_name' => 'required|string',
-            'middle_name' => 'string',
             'last_name' => 'required|string',
             'user_type_id' => 'required|string',
             'email' => 'required|string|unique:users,email',
@@ -48,6 +47,33 @@ class FacebookAuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+
+        if ($user) {
+
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return response($response, 201);
+        } else {
+
+
+            $response = [
+                'user' => null,
+                'token' => null,
+                'error' => 'The email provided is not yet registered.'
+            ];
+
+            return response($response);
+        }
     }
 
     // namespace App\Http\Controllers\Auth;
