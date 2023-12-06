@@ -21,6 +21,7 @@ class CheckRentalDueDate extends Command
      */
     public function handle()
     {
+        print('now running');
         // Get today's date
         $today = Carbon::now();
 
