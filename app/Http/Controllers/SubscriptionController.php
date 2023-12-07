@@ -66,7 +66,9 @@ class SubscriptionController extends Controller
 
         foreach ($res as $subscription) {
             $subscription->unit;
-            $subscription->unit->images[0]->image;
+            foreach ($subscription->unit->images as $unit_img) {
+                $unit_img->image;
+            }
             $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
             $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
             $out[] = $subscription;
@@ -86,6 +88,9 @@ class SubscriptionController extends Controller
         foreach ($res as $subscription) {
             if ($subscription['status' == 1]) {
                 $subscription->unit;
+                foreach ($subscription->unit->images as $unit_img) {
+                    $unit_img->image;
+                }
                 $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
                 $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
                 $images = $this->unit_images($subscription->id);
