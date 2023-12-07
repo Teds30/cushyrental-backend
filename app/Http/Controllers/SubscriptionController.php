@@ -62,13 +62,16 @@ class SubscriptionController extends Controller
             return response()->json([]);
         }
 
+        $out = [];
+
         foreach ($res as $subscription) {
             $subscription->unit;
             $subscription->unit->images[0]->image;
             $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
             $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
+            $out[] = $subscription;
         }
-        return $res;
+        return $out;
     }
     public function silver_units()
     {
@@ -78,12 +81,19 @@ class SubscriptionController extends Controller
             return response()->json([]);
         }
 
+        $out = [];
+
         foreach ($res as $subscription) {
-            $subscription->unit;
-            $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
-            $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
+            if ($subscription['status' == 1]) {
+                $subscription->unit;
+                $subscription->unit['amenities'] = $this->unit_amenities($subscription->unit->id);
+                $subscription->unit['images'] = $this->unit_images($subscription->unit->id);
+                $images = $this->unit_images($subscription->id);
+                $subscription["images"] = $images;
+                $out[] = $subscription;
+            }
         }
-        return $res;
+        return $out;
     }
 
     public function unit_amenities($id)
