@@ -495,11 +495,11 @@ class UnitController extends Controller
 
             foreach ($rentals as $u_rental) {
                 if ($u_rental['status'] == 1) {
-                    $out = $u_rental->reviews;
                     foreach ($u_rental->reviews as $review) {
                         $review->user;
                         $review->rental->unit->landlord;
                     }
+                    $out[] = $u_rental->reviews;
                 }
             }
         }
