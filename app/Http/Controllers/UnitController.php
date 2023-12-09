@@ -487,7 +487,7 @@ class UnitController extends Controller
     public function unit_reviews($id)
     {
         $res = Unit::find($id);
-        $out = null;
+        $out = array();
 
 
         if ($res) {
@@ -499,7 +499,7 @@ class UnitController extends Controller
                         $review->user;
                         $review->rental->unit->landlord;
                     }
-                    $out[] = $u_rental->reviews;
+                    $out = $u_rental->reviews;
                 }
             }
         }
