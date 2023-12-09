@@ -517,7 +517,7 @@ class UnitController extends Controller
         $count = count($res);
 
         foreach ($res as $review) {
-            $sum += intval($review['star']);
+            $sum += floatval($review['star']);
         }
 
         $average = $sum / $count;

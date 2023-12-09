@@ -74,7 +74,7 @@ class Unit extends Model
 
         foreach ($rentals as $u_rental) {
             if ($u_rental['status'] == 1) {
-                $out = $u_rental->reviews;
+                $out[] = $u_rental->reviews[0];
             }
         }
         return $out;
@@ -90,7 +90,7 @@ class Unit extends Model
         $count = count($res);
 
         foreach ($res as $review) {
-            $sum += intval($review['star']);
+            $sum += floatval($review['star']);
         }
 
         if ($count == 0) {
