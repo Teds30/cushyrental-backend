@@ -499,7 +499,7 @@ class UnitController extends Controller
                         $review->user;
                         $review->rental->unit->landlord;
                     }
-                    $out = $u_rental->reviews;
+                    $out[] = $u_rental->reviews[0];
                 }
             }
         }
