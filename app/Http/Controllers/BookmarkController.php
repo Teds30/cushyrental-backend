@@ -98,6 +98,7 @@ class BookmarkController extends Controller
                 $unit['images'] = $images;
                 $unit['active_subscription'] = $subscriptions;
                 $unit['average_ratings'] = $ratings;
+                $unit['reviews_count'] = $reviews_count;
                 $unit['bookmark'] = $bookmark;
 
                 $bookmarksWithUnits[] = $unit;
