@@ -487,7 +487,7 @@ class UnitController extends Controller
     public function unit_reviews($id)
     {
         $res = Unit::find($id);
-        $out = array();
+        $out = null;
 
 
         if ($res) {
