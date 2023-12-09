@@ -76,9 +76,9 @@ class BookmarkController extends Controller
 
         foreach ($bookmarks as $bookmark) {
             $unit = Unit::where('id', $bookmark->unit_id)
-            ->where('is_listed', $is_listed)
-            ->where('status', 1)
-            ->first();
+                ->where('is_listed', $is_listed)
+                ->where('status', 1)
+                ->first();
 
             if ($unit) {
                 $unit->load('landlord');
@@ -89,7 +89,7 @@ class BookmarkController extends Controller
                 $images = $this->unit_images($unit->id);
                 $subscriptions = $this->unit_active_subscriptions($unit->id);
                 $ratings = $unit->get_average_ratings();
-
+                $reviews_count = count($unit->unit_reviews($unit->id));
                 // Add average ratings to the unit details
                 $unit['amenities'] = $amenities;
                 $unit['facilities'] = $facilities;
