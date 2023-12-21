@@ -74,7 +74,9 @@ class Unit extends Model
 
         foreach ($rentals as $u_rental) {
             if ($u_rental['status'] == 1) {
-                $out[] = $u_rental->reviews[0];
+                if (count($u_rental->reviews) > 0) {
+                    $out[] = $u_rental->reviews[0];
+                }
             }
         }
         return $out;
