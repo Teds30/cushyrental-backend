@@ -85,20 +85,24 @@ class Unit extends Model
         $id = $this->attributes['id'];
         $res = $this->unit_reviews($id);
 
-        $average = 0;
-        $sum = 0;
         $count = count($res);
 
-        foreach ($res as $review) {
-            $sum += floatval($review['star']);
+        if ($count > 0) {
+
+            $average = 0;
+            $sum = 0;
+
+            foreach ($res as $review) {
+                $sum += floatval($review['star']);
+            }
+
+            $average = $sum / $count;
+            return $average;
         }
 
-        if ($count == 0) {
-            return 0;
-        }
-        $average = $sum / $count;
-        return $average;
+        return 0;
     }
+
     public function bookmark()
     {
         return $this->hasMany(Bookmark::class, 'unit_id');
