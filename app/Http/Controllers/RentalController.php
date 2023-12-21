@@ -230,7 +230,7 @@ class RentalController extends Controller
             return response()->json([], 404);
         }
 
-        $units_count = count($res->units);
+        $units_count = 0;
 
         $listed_count = 0;
         $unlisted_count = 0;
@@ -239,21 +239,26 @@ class RentalController extends Controller
         $tenants = array();
 
         foreach ($res->units as $unit) {
-            if ($unit['is_listed'] == 1) {
-                $listed_count++;
-            } else {
-                $unlisted_count++;
-            }
+            if ($unit['status'] == 1) {
 
-            if ($unit['request_status'] == 0) {
-                $pending_count++;
-            }
-            if ($unit['slots'] == 0) {
-                $occupied_count++;
-            }
+                $units_count++;
 
-            foreach ($unit->rentals as $rental) {
-                $tenants[] = $rental->user['id'];
+                if ($unit['is_listed'] == 1) {
+                    $listed_count++;
+                } else {
+                    $unlisted_count++;
+                }
+
+                if ($unit['request_status'] == 0) {
+                    $pending_count++;
+                }
+                if ($unit['slots'] == 0) {
+                    $occupied_count++;
+                }
+
+                foreach ($unit->rentals as $rental) {
+                    $tenants[] = $rental->user['id'];
+                }
             }
         }
 
