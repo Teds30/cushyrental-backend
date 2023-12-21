@@ -37,16 +37,6 @@ return new class extends Migration
             //     ->references('id')
             //     ->on('users');
         });
-        DB::unprepared('
-            CREATE TRIGGER update_slots
-            BEFORE UPDATE ON units
-            FOR EACH ROW
-            BEGIN
-                IF NEW.slots = 0 THEN
-                    SET NEW.is_listed = 0;
-                END IF;
-            END
-        ');
     }
 
     /**
