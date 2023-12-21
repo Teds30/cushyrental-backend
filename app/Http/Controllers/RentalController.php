@@ -239,21 +239,24 @@ class RentalController extends Controller
         $tenants = array();
 
         foreach ($res->units as $unit) {
-            if ($unit['is_listed'] == 1) {
-                $listed_count++;
-            } else {
-                $unlisted_count++;
-            }
+            if ($unit['status'] == 1) {
 
-            if ($unit['request_status'] == 0) {
-                $pending_count++;
-            }
-            if ($unit['slots'] == 0) {
-                $occupied_count++;
-            }
+                if ($unit['is_listed'] == 1) {
+                    $listed_count++;
+                } else {
+                    $unlisted_count++;
+                }
 
-            foreach ($unit->rentals as $rental) {
-                $tenants[] = $rental->user['id'];
+                if ($unit['request_status'] == 0) {
+                    $pending_count++;
+                }
+                if ($unit['slots'] == 0) {
+                    $occupied_count++;
+                }
+
+                foreach ($unit->rentals as $rental) {
+                    $tenants[] = $rental->user['id'];
+                }
             }
         }
 
