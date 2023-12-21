@@ -230,7 +230,7 @@ class RentalController extends Controller
             return response()->json([], 404);
         }
 
-        $units_count = count($res->units);
+        $units_count = 0;
 
         $listed_count = 0;
         $unlisted_count = 0;
@@ -240,6 +240,8 @@ class RentalController extends Controller
 
         foreach ($res->units as $unit) {
             if ($unit['status'] == 1) {
+
+                $units_count++;
 
                 if ($unit['is_listed'] == 1) {
                     $listed_count++;
