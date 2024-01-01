@@ -30,6 +30,7 @@ class User extends Authenticatable
         'is_verified',
         'is_social',
         'status',
+        'email_verified_at'
     ];
 
     /**

@@ -32,6 +32,7 @@ class AuthController extends Controller
             'user_type_id' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string|confirmed',
+            'email_verified_at' => 'string'
         ]);
 
         $user = User::create([
@@ -43,6 +44,8 @@ class AuthController extends Controller
             'user_type_id' => $fields['user_type_id'],
             'email' => $fields['email'],
             'password' => $fields['password'],
+            'password' => $fields['password'],
+            'email_verified_at' => $fields['email_verified_at'],
         ]);
 
         $user = User::find($user->id);
